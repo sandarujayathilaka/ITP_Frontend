@@ -9,7 +9,7 @@ import bg from "../assets/Image.png";
 import { Link } from "react-router-dom";
 import { HiArrowNarrowRight } from "react-icons/hi";
 
-
+//home
 function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
