@@ -4,17 +4,17 @@ import { useParams } from 'react-router-dom';
 
 export default function UpdateVac() {
 
+      const param = useParams();
     const [name,setName]=useState("")
     const [loading, setLoading] = useState(true);
-    const [currentHealthStatus, setCurrentHealthStatus] = useState('');
+    const healthState =param.state;
+    const [currentHealthStatus, setCurrentHealthStatus] = useState(healthState);
     const [vaccinations, setVaccinations] = useState([]);
-    const param = useParams();
     const pid =param.id;
     console.log(pid)
     const index = param.index;
     console.log(index)
-    const healthState =param.state;
-    console.log(healthState)
+    console.log(healthState+"hi")
 
    useEffect(() => {
     console.log("hidfd")
@@ -42,11 +42,8 @@ export default function UpdateVac() {
    const handleSubmit = async (event) => {
 
             event.preventDefault();
-
-            console.log(vaccinations)
             console.log(currentHealthStatus)
 
-            
             const newreport = { 
                 pid,
                 index, 
@@ -63,6 +60,7 @@ export default function UpdateVac() {
               
             }
           };
+
 
       
 
@@ -87,9 +85,9 @@ export default function UpdateVac() {
             Status:
           </label>
 
-          <select name="currentHealthStatus"  value={currentHealthStatus} onChange={(event) => setCurrentHealthStatus(event.target.value)} id="currentHealthStatus" class="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-          <option selected>{healthState}</option>
-         <option value="Normal">Normal</option>
+        <select name="currentHealthStatus"  value={currentHealthStatus} onChange={(event) => setCurrentHealthStatus(event.target.value)} id="currentHealthStatus" class="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <option selected >{healthState}</option>
+        <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>
         <option value="Scheduled">Scheduled</option>
  

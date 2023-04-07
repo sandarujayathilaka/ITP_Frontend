@@ -92,12 +92,12 @@ return(
                         
                         <td class="px-6 py-4 text-center"> {Profile.breed} </td>
                         <td class="px-6 py-4 text-center"> {formatDate(Profile.date)} </td>
-                        <td class="px-6 py-4 text-center"> <span
-                    class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ml-[18px] ${
-                      Profile.petStatus === "adopted" ? "bg-blue-600" : "bg-green-600"
-                    }`}
-                  >
-                    {Profile.petStatus === "adopted" ? "Adopted" : "Available"}
+                        <td class="px-6 py-4 text-center"> 
+                        <span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ml-[18px] ${
+                      Profile.petStatus === "Adopted" ? "bg-blue-600" : "bg-green-600"
+                    }`} >
+                  
+                    {Profile.petStatus === "Adopted" ? "Adopted" : "Available"}
                   </span>
                         
                         </td>

@@ -25,7 +25,7 @@ export default function DisplayHealth() {
           setReport(res.data.petReport)
           setvaccinations(res.data.petReport.vaccinations);
           setLoading(false);
-          console.log(res.data.petReport.vaccinations[0].name)
+        
           
       }catch(err){
 
@@ -59,6 +59,18 @@ export default function DisplayHealth() {
         doc.save('VacReport.pdf');
       };
     
+
+      const onDelete =(index)=>{
+        axios.delete(`http://localhost:5000/api/vet/deletevac/${index}/${id}`).then((res)=>{
+
+        alert("Report Deleted!!")
+       
+             }).catch((err)=>{
+ 
+                 alert(err)     
+             })
+    }
+
         
 
   return (
@@ -131,7 +143,7 @@ export default function DisplayHealth() {
                                         </div>
                                         </Link>
 
-                                        <button onClick="#">
+                                        <button onClick={()=>onDelete(vaccinations[index])}>
                                         <div class="w-4 mr-2 transform hover:text-red-600 hover:scale-110">
                                       
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -5,11 +5,11 @@ import { useParams } from 'react-router-dom';
 function AddHealth() {
 
     const [petId, setPetId] = useState('');
-    const [currentHealthStatus, setCurrentHealthStatus] = useState('');
-    const [vaccinations, setVaccinations] = useState([]);
     const param = useParams();
-    const pid =param.id;
     const healthState =param.state;
+    const [currentHealthStatus, setCurrentHealthStatus] = useState(healthState);
+    const [vaccinations, setVaccinations] = useState([]);
+    const pid =param.id;
     console.log(healthState)
  
    
@@ -23,7 +23,7 @@ function AddHealth() {
                 vaccinations };
 
             try {
-              await axios.put(`http://localhost:5000/api/vet/reportupdate/${pid}`, newreport);
+              await axios.put(`http://localhost:5000/api/vet/addvac/${pid}`, newreport);
               alert('Report saved successfully');
             } catch (error) {
               console.log(error);
