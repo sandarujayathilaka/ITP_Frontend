@@ -20,6 +20,7 @@ import Addvac from './components/Animal_Management/Health_Profile/Addvac'
 import AdoptPet from './components/adoptPetPage/AdoptPet';
 import Footer from './components/common/Footer';
 import Report from './components/Animal_Management/Health_Profile/Report';
+import UpdateVac from './components/Animal_Management/Health_Profile/UpdateVac';
 
 
 function App() {
@@ -37,19 +38,20 @@ function App() {
                 <Route path='addpet' element={<AddPetProfile />} />
                 <Route path='addhealthprofile' element={<AddHealth />} />  
                 <Route path='profilepage/:id' element={<ProfilePage />} />
+                <Route path='healthprofile' element={<HealthProfile />} />
+                <Route path='displayhealth/:id' element={<DisplayHealth />} />
+                <Route  path='addvac/:id/:state' element={<Addvac/>}/>
+            
             </Route>
-           
-            <Route path='/healthprofile' element={<HealthProfile />} />
-            <Route path='/addhealthprofile' element={<AddHealth />} />
-            <Route path='/displayhealth/:id' element={<DisplayHealth />} />
+            
             <Route path='/UpdateHealth/:id' element={<UpdateHealth/>}/>
             <Route path='/test/:id/qrcode' element={<Test />} />
-            <Route  path='/vacreport/:id' element={<VacReport/>}/>
-            <Route  path='/addvac/:id/:state' element={<Addvac/>}/>
-            <Route path='adoptpet' element={<AdoptPet />} />
-            <Route path='/report/:id' element={<Report/>} />
+            <Route path='/upvac/:id/:index/:state' element={<UpdateVac />} />
+            {/* <Route  path='/vacreport/:id' element={<VacReport/>}/> */}
             
-            <Route path='addpet' element={<AddPetProfile />} />
+            {/* <Route path='/report/:id' element={<Report/>} /> */}
+            
+
             
           </Routes>
       </div>

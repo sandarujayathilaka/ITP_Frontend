@@ -1,40 +1,90 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import name from './logo512.png'
+import 'jspdf-autotable';
+
 
 export default function DisplayHealth() {
  
     const [report,setReport] = useState({});
+    const [Index,setIndex] = useState("");
     const [loading, setLoading] = useState(true);
+    const [vaccinations, setvaccinations] = useState([]);
     const param = useParams();
-    
-        useEffect(()=>{
+    const { id } = useParams();
+
+    useEffect(()=>{
             
-            const pid = param.id
+      const pid = param.id
+    
+  async function getProfile(){
+      try{
+      const res = await axios.get(`http://localhost:5000/api/vet/getreport/${pid}`)
+          setReport(res.data.petReport)
+          setvaccinations(res.data.petReport.vaccinations);
+          setLoading(false);
+          console.log(res.data.petReport.vaccinations[0].name)
           
+      }catch(err){
 
-        async function getProfile(){
-            try{
-            const res = await axios.get(`http://localhost:5000/api/vet/getreport/${pid}`)
-                setReport(res.data.petReport)
-                setLoading(false);
-                console.log(res.data)
-                
-            }catch(err){
+          alert(err)
 
-                alert(err)
+      }
+  } 
 
-            }
-        } 
-
-        getProfile()
-        },[param.id])
-
+  getProfile()
+  },[param.id])
+     
+      const generatePDF = () => {
+        const doc = new jsPDF('landscape', 'px', 'a4', false);
+        doc.addImage(name, 'JPG', 45, 10, 50, 50);
+        doc.setFont('Helvertica', 'bold');
+       
+    
+        doc.autoTable({
+          startY: 70,
+          head: [['Vac Name', 'Date Given', 'Expiration Date']],
+          body: vaccinations.map(vaccination => [
+            vaccination.name,
+            vaccination.dateGiven.toString(),
+            vaccination.expirationDate.toString()
+          ]),
+    
+          theme:'grid'
+    
+        });
+        
+        doc.save('VacReport.pdf');
+      };
+    
+        
 
   return (
     <>
-    <h1>{report.currentHealthStatus}</h1>
-    <h1>{report.petId}</h1>
+<div class="bg-slate-400 ml-96 mt-36 mb-20 mr-36 w-auto rounded-2xl">
+  <div class="pt-10">
+    <h1 class="text-2xl font-bold text-[#131342] text-center">Vaccination Report</h1>
+    </div>
+   <div class="ml-[600px] -mt-7">
+   <Link to={`/petprofile/addvac/${id}/${report.currentHealthStatus}`}
+       className=" bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
+       >Add New Vac</Link>
+   </div>
+    <div class="flex gap-4 ml-20 mt-5">
+  <h1 class="text-lg font-bold">Pet ID : </h1>
+  <h1 class="text-lg">{report.petId}</h1>
+</div>
+
+<div class="flex gap-4 ml-20 mt-2">
+  <h1 class="text-lg font-bold">Pet Status : </h1>
+  <h1 class="text-lg"><span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ${
+    report.currentHealthStatus === "Critical" ? "bg-red-600" : (report.currentHealthStatus === "Scheduled" ? "bg-yellow-600" : "bg-green-600")
+  }`}>
+    {report.currentHealthStatus === "Critical" ? "Critical" : (report.currentHealthStatus === "Scheduled" ? "Scheduled" : "Normal")}
+  </span></h1>
+</div>
 
     {loading ? (
         <button disabled type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">
@@ -45,26 +95,71 @@ export default function DisplayHealth() {
         Loading...
     </button>
       ) : (
-    <table style={{ border: "2px solid black" }}>
-        <thead >
-          <tr style={{ border: "2px solid black" }}>
-            <th style={{ border: "2px solid black" }}>Vaccine Name</th>
-            <th>Inject Date</th>
-            <th>Expire Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {report.vaccinations.map((vaccine, index) => (
-            <tr style={{ border: "2px solid black" }} key={index}>
-              <td>{vaccine.name}</td>
-              <td>{vaccine.dateGiven}</td>
-              <td>{vaccine.expirationDate}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <div class="flex pt-[30px] pb-16">
+          <div class=" w-full ml-20 mr-20 bg-slate-100 border rounded-lg overflow-hidden dark:border-gray-700">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead>
+                <tr class="bg-blue-400">
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Vaccine Name</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Inject Date</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Expire Date</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        
+              {report.vaccinations.map((vaccine, index) => (
+                <tr
+                key={index}
+                class={`${index % 2 === 0 ? 'bg-white' : 'bg-blue-100 dark:bg-blue-100'}`}
+              >
+        
+                  <td class="px-1 py-2 whitespace-nowrap text-sm font-medium text-black">{vaccine.name}</td>
+                  <td class="px-1 py-2 whitespace-nowrap text-sm text-gray-800">{vaccine.dateGiven}</td>
+                  <td class="px-1 py-2 whitespace-nowrap text-sm text-gray-800">{vaccine.expirationDate}</td>
+                  <td class="py-3 px-6 text-center">
+                        
+                                    <div class="flex item-center justify-center">
+                                        
+                                        <Link to={`/upvac/${id}/${index}/${report.currentHealthStatus}`}>
+                                        <div class="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110">
+                                        
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                            
+                                        </div>
+                                        </Link>
+
+                                        <button onClick="#">
+                                        <div class="w-4 mr-2 transform hover:text-red-600 hover:scale-110">
+                                      
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                           
+                                        </div>
+                                        </button>
+
+                                    </div>
+                                </td>
+        
+                </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
+
+<button onClick={generatePDF} className="bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mx-auto">Download pdf</button>
+
+<br></br>
+
+      </div>
     </>
 
   )
 }
+
+

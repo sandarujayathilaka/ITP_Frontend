@@ -19,6 +19,7 @@ export default function UpdateHealth(){
         try {
           const res = await axios.get(`http://localhost:5000/api/vet/getreport/${id}`);
           const reportdata = res.data.petReport;
+          console.log(reportdata.vaccinations)
           setReport(reportdata);
           setStatus(reportdata.currentHealthStatus);
           setvaccinations(reportdata.vaccinations);
@@ -55,6 +56,8 @@ export default function UpdateHealth(){
     }
 
     const handleVaccinationChange = (index, event) => {
+      console.log(event)
+      console.log(index)
         const newVaccinations = [...vaccinations];
         newVaccinations[index][event.target.name] = event.target.value;
         const vaccination =  vaccinations[index];
@@ -78,15 +81,7 @@ export default function UpdateHealth(){
         setvaccinations(newVaccinations);
       };
 
-      const changeDate= (date)=>{
-
-        if (new Date(date).toString() !== 'Invalid Date') {
-          var newDate =(new Date(date).toISOString().split('T')[0]);
-          return newDate;
-        }
-        return null;
-      }
-
+     
     return(
         <>
             <div className="absolute top-62 left-386 w-[900px] h-936 bg-[#2F333624] rounded-3xl shadow-2xl ml-[29%] mt-[5%]">
@@ -112,7 +107,7 @@ export default function UpdateHealth(){
           <option selected>Choose a health Status</option>
          <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>
-        <option value="Sheduled">Sheduled</option>
+        <option value="Sheduled">Scheduled</option>
  
         </select>
         </div>
@@ -132,7 +127,7 @@ export default function UpdateHealth(){
       type="date"
       id={`dateGiven-${index}`}
       name={`dateGiven-${index}`}
-      defaultValue={changeDate(vaccination.dateGiven)}
+      defaultValue={vaccination.dateGiven}
       onChange={(event) => handleVaccinationChange(index, event)}
     />
 
@@ -141,7 +136,7 @@ export default function UpdateHealth(){
       type="date"
       id={`expirationDate-${index}`}
       name={`expirationDate-${index}`}
-      defaultValue={changeDate(vaccination.expirationDate)}
+      defaultValue={vaccination.expirationDate}
       onChange={(event) => handleVaccinationChange(index, event)}
     />
 

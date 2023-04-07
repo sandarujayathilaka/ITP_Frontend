@@ -72,7 +72,7 @@ function AddHealth() {
           <option selected>{healthState}</option>
          <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>
-        <option value="Sheduled">Sheduled</option>
+        <option value="Scheduled">Scheduled</option>
  
         </select>
         </div>
