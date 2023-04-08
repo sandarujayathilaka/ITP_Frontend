@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom';
 export default function ProfilePage() {
 
     const [Profile,setProfile] = useState({});
-    const param = useParams();
+    const [qrCode, setQrCode] = useState('');
+    const param = useParams()
+    const pid = param.id
+
     
         useEffect(()=>{
 
-            const pid = param.id
-
+         
         async function getProfile(){
             try{
             const res = await axios.get(`http://localhost:5000/api/vet/profile/${pid}`)
@@ -28,10 +30,27 @@ export default function ProfilePage() {
         getProfile()
         },[])
 
+  useEffect(() => {
+    // Fetch the QR code data from the backend
+    console.log(pid)
+    axios.get(`http://localhost:5000/api/vet/pets/qrcode/${pid}`)
+      .then((res) => {
+        setQrCode(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [pid]);
+
+  const handlePrint = () => {
+    window.print();
+  }
+  
+
 
   return (
     <>
-    <div class="overflow-hidden bg-secondary shadow sm:rounded-3xl max-w-screen-lg mx-auto mt-28 mb-9 ml-96">
+    <div class="overflow-hidden bg-secondary shadow sm:rounded-3xl max-w-screen-lg mx-auto mt-28 mb- ml-96">
   <div class="px-4 py-5 sm:px-6">
     <h3 class="text-xl font-semibold leading-6 text-white">{Profile.petName}</h3>
     <p class="mt-1 max-w-2xl text-sm text-white">Pet Information.</p>
@@ -78,9 +97,19 @@ export default function ProfilePage() {
         <dd class="mt-1 text-lg  text-black sm:col-span-2 sm:mt-0">{Profile.species}</dd>
       </div>
 
+ 
+
     </dl>
   </div>
+  
+
+
 </div>
+
+<img className=' w-48 ml-[1100px] -mt-[225px] ' src={`data:image/png;base64,${qrCode}`} alt="QR code" />
+
+
+
     </>
 
   )
