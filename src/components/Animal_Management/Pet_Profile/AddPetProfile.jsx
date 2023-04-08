@@ -68,8 +68,8 @@ function AddPetProfile() {
 
       return (
         <>
-        <div class="flex justify-center items-center h-full w-full bg-white pt-20">
-          <div class="w-2/3 bg-[#34495E] rounded-3xl shadow-2xl p-8 m-4 ml-64">
+        <div class="flex justify-center items-center  h-full w-full bg-white pt-20">
+          <div class="w-2/3 bg-[#34495E] rounded-3xl shadow-2xl p-8 m-4 ml-64 mt-16">
             <h1 class="block w-full text-center text-white text-3xl font-bold mb-6">Pet Registration</h1>
 
             <form onSubmit={addPet} method="post" class="grid grid-cols-3 gap-1">

@@ -49,8 +49,8 @@ function AddHealth() {
 
     return (
       <>
-      <div className="absolute top-62 left-386 w-[900px] h-936 bg-[#2F333624] rounded-3xl shadow-2xl ml-[29%] mt-[5%]">
-      <h1 class="text-center text-3xl mt-5 font-bold">Vaccination Profile Registration</h1>
+      <div className="absolute top-62 left-386 w-[900px] h-936 bg-[#2F333624] rounded-3xl  shadow-2xl ml-[29%] mt-[10%]">
+      <h1 class="text-center text-3xl mt-5 font-bold">Inserting New Vaccination Record</h1>
       <form className="flex flex-col gap-4 p-8" onSubmit={handleSubmit}>        
       <div className="flex flex-col">
           <label htmlFor="petId"
@@ -85,7 +85,7 @@ function AddHealth() {
           >
             Vaccine :
           </label>
-          <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your pet's ID"/>
+          <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter Vaccination Name"/>
 
 	
 		<label htmlFor="dateGiven" 
@@ -118,20 +118,20 @@ function AddHealth() {
             </div>
           ))}
           
-                 
-      <button type="button" onClick={handleAddVaccination}
-            className="bg-green-600 rounded-[10px] mt-5 h-10 w-[500px] m-auto hover:bg-green-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
-          
-          >
+       <div class="relative ml-[200px]">
+
+       <button type="button" onClick={handleAddVaccination} className="bg-green-600 rounded-[10px] mt-5 h-10 w-[200px] m-auto hover:bg-green-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline">
          ADD VACCINATION
+       </button>
+
+        </div>          
+      
+          <div class="relative -mt-[76px] ml-[430px]">
+          <button type="submit" className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[200px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline">
+         SAVE RECORDS
           </button>
-          
-          <button type="submit"
-            className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[500px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
-          
-          >
-         Save Report
-          </button>
+
+          </div>
         
         </form>
     </div>

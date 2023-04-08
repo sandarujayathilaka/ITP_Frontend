@@ -78,7 +78,7 @@ function AddHealth() {
           >
             Vaccine :
           </label>
-          <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your pet's ID"/>
+          <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter Vaccination Name"/>
 
 	
 		<label htmlFor="dateGiven" 
@@ -111,20 +111,20 @@ function AddHealth() {
             </div>
           ))}
           
-                 
-      <button type="button" onClick={handleAddVaccination}
-            className="bg-green-600 rounded-[10px] mt-5 h-10 w-[500px] m-auto hover:bg-green-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
-          
-          >
-         ADD VACCINATION
-          </button>
-          
-          <button type="submit"
-            className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[500px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
-          
-          >
-         Save Report
-          </button>
+          <div class="relative ml-[200px]">
+
+<button type="button" onClick={handleAddVaccination} className="bg-green-600 rounded-[10px] mt-5 h-10 w-[200px] m-auto hover:bg-green-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline">
+  ADD VACCINATION
+</button>
+
+ </div>          
+
+   <div class="relative -mt-[76px] ml-[430px]">
+   <button type="submit" className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[200px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline">
+  SAVE RECORDS
+   </button>
+
+   </div>
         
         </form>
     </div>

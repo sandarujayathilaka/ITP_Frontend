@@ -5,7 +5,7 @@ import { Link, Outlet} from "react-router-dom";
 export default function AllPetProfile(){
 
     const [Profile,setProfile] = useState([]);
-    const [SearchProfile,setSearch] = useState([]);
+    const [filterOption, setFilterOption] = useState("all");
     
         useEffect(()=>{
 
@@ -50,8 +50,8 @@ export default function AllPetProfile(){
             const result = profile.filter(
               (r) =>
                 r.petId.includes(searchTerm) ||
-                r.breed.toLowerCase().includes(searchTerm)
-               
+                r.breed.toLowerCase().includes(searchTerm)||
+                r.breed.includes(searchTerm)
             );
             setProfile(result);
           }
@@ -67,54 +67,62 @@ export default function AllPetProfile(){
             });
           };
 
+          const handleFilterChange = (event) => {
+            setFilterOption(event.target.value);
+          };
+
+
 
        
 return(
 
-    <>
+    <div>
+
+    <div class="min-h-screen  py-5 ml-[17%] pt-20 ">
 
 
-    <div class="min-h-screen  py-5 ml-[17%] pt-20">
 
-    <form class="flex items-center">   
+    <form class="flex items-center mt-10">   
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-1/2 ml-80">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required/>
+        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID or Breed" required/>
     </div>
-    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <span class="sr-only">Search</span>
-    </button>
 </form>
 
-    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4
-     focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-auto mb-4 dark:bg-blue-600 
+<div class="-mt-[42px] absolute ml-[215px]">
+<select id="countries" value={filterOption} onChange={handleFilterChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-15 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected value="all">All</option>
+  <option value="Available">Available</option>
+  <option value="Adopted">Adopted</option>
+
+</select>
+
+</div>
+
+
+<div class="-mt-[58px]">
+<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4
+     focus:ring-blue-300 font-medium rounded-xl text-sm px-3.5 py-2 text-center ml-[1045px] mt-5 mb-4 dark:bg-blue-600 
      dark:hover:bg-blue-700 dark:focus:ring-blue-800"><Link to="/petprofile/addpet">Add Profile</Link></button>
-        <div class='overflow-x-auto w-full'>
-            <table class='mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
+</div>
+        <div class='overflow-x-auto w-full mt-10'>
+            <table class='mx-auto max-w-5xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
                 <thead class="bg-gray-900">
                     <tr class="text-white text-left">
-                        <th class="font-semibold text-sm uppercase px-6 py-4"> ID </th>
-                        <th class="font-semibold text-sm uppercase px-6 py-4"> BREED </th>
+                        <th class="font-semibold text-sm uppercase text-center px-6 py-4"> ID </th>
+                        <th class="font-semibold text-sm uppercase text-center px-6 py-4"> BREED </th>
                         <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> ARRIVED Date </th>
                         <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> STATUS </th>
-                        <th class="font-semibold text-sm uppercase px-6 py-4">ACTION</th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center">ACTION</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
-                    {Profile.map((Profile,index)=>
-                    <tr key={index} class="bg-gray-5 hover:bg-slate-100">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center space-x-3">
-                                <div>
-                                    <p> {Profile.petId}</p>
-                                </div>
-                            </div>
-                        </td>
-                        
+                <tbody class="divide-y divide-gray-400">
+                    {Profile.filter((r) =>filterOption === "all" ? true : r.petStatus === filterOption).map((Profile,index)=>
+                    <tr key={index} class="bg-gray-200 hover:bg-slate-100">
+                        <td class="px-6 py-4 text-center"> {Profile.petId}</td>
                         <td class="px-6 py-4 text-center"> {Profile.breed} </td>
                         <td class="px-6 py-4 text-center"> {formatDate(Profile.date)} </td>
                         <td class="px-6 py-4 text-center"> 
@@ -127,7 +135,7 @@ return(
                         
                         </td>
 
-                        <td class="px-6 py-4 text-center">
+                        
                         <td class="py-3 px-6 text-center">
                         
                                     <div class="flex item-center justify-center">
@@ -163,14 +171,14 @@ return(
 
                                     </div>
                                 </td>
-                        </td>
                     </tr>)}
                 </tbody>
             </table>
         </div>
     </div>
+    
     <Outlet/>
-    </>
+    </div>
 )
 }
 

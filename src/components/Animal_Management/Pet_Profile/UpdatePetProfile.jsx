@@ -86,18 +86,18 @@ export default function UpdatePetProfile(){
         <>
 
         <div class="flex justify-center items-center h-full w-full bg-white pt-20">
-    <div class="w-2/3 bg-[#34495E] rounded-3xl shadow-2xl p-8 m-4 ml-64">
-        <h1 class="block w-full text-center text-white text-3xl font-bold mb-6">Pet Registration</h1>
+    <div class="w-2/3 bg-[#34495E] rounded-3xl shadow-2xl p-8 m-4 ml-64 mt-20">
+        <h1 class="block w-full text-center text-white text-3xl font-bold mb-6">Profile Updation</h1>
 
-        <form onSubmit={UpdateData} method="post" class="grid grid-cols-3 gap-0.5">
+        <form onSubmit={UpdateData} method="post" class="grid grid-cols-3 gap-1">
             
-        <div class="flex flex-col mb-4 mr-5">
+        <div class="flex flex-col mb-4 mr-5 mt-3">
       <label class="mb-2 font-bold text-lg text-white ml-5" for="petName">Pet Name</label>
       <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="petName" id="petName" value={petName} onChange={(e)=>{
         setName(e.target.value)}}/>
     </div>
 
-            <div class="flex flex-col mb-4 mr-5">
+            <div class="flex flex-col mb-4 mr-5 mt-3">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="petStatus">Species</label>
                 <select name="petStatus"  id="species" value={species} onChange={(e)=>{
         setSpec(e.target.value)}} class="border py-2 px-3 text-grey-800 w-full rounded-xl">
@@ -108,7 +108,7 @@ export default function UpdatePetProfile(){
               </div>
 
 
-            <div class="flex flex-col mb-4 mr-5 ">
+            <div class="flex flex-col mb-4 mr-5 mt-3">
          
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="breed">Breed</label>
                 <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="breed" id="breed" value={breed} onChange={(e)=>{

@@ -112,10 +112,10 @@ export default function DisplayHealth() {
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
                 <tr class="bg-blue-400">
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Vaccine Name</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Inject Date</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Expire Date</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-black uppercase">Action</th>
+                  <th scope="col" class="px-2 py-3 text-center text-xs font-medium text-black uppercase">Vaccine Name</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-black uppercase">Inject Date</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-black uppercase">Expire Date</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-black uppercase">Action</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -126,10 +126,10 @@ export default function DisplayHealth() {
                 class={`${index % 2 === 0 ? 'bg-white' : 'bg-blue-100 dark:bg-blue-100'}`}
               >
         
-                  <td class="px-1 py-2 whitespace-nowrap text-sm font-medium text-black">{vaccine.name}</td>
-                  <td class="px-1 py-2 whitespace-nowrap text-sm text-gray-800">{vaccine.dateGiven}</td>
-                  <td class="px-1 py-2 whitespace-nowrap text-sm text-gray-800">{vaccine.expirationDate}</td>
-                  <td class="py-3 px-6 text-center">
+                  <td class="px-1 py-2 text-center whitespace-nowrap text-sm font-medium text-black">{vaccine.name}</td>
+                  <td class="px-1 py-2 text-center whitespace-nowrap text-sm text-gray-800">{vaccine.dateGiven}</td>
+                  <td class="px-1 py-2 text-center whitespace-nowrap text-sm text-gray-800">{vaccine.expirationDate}</td>
+                  <td class="py-3 px-6  text-center">
                         
                                     <div class="flex item-center justify-center">
                                         
