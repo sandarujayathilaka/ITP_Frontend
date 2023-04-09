@@ -21,6 +21,7 @@ import AdoptPet from './components/adoptPetPage/AdoptPet';
 import Footer from './components/common/Footer';
 import Report from './components/Animal_Management/Health_Profile/Report';
 import UpdateVac from './components/Animal_Management/Health_Profile/UpdateVac';
+import Dashboard from './components/Animal_Management/Dashboard/Dashboard';
 
 
 function App() {
@@ -41,11 +42,13 @@ function App() {
                 <Route path='healthprofile' element={<HealthProfile />} />
                 <Route path='displayhealth/:id' element={<DisplayHealth />} />
                 <Route  path='addvac/:id/:state' element={<Addvac/>}/>
+                <Route path='dashboard' element={<Dashboard />} />
             
             </Route>
             
             <Route path='/UpdateHealth/:id' element={<UpdateHealth/>}/>
             <Route path='/test/:id/qrcode' element={<Test />} />
+           
             <Route path='/upvac/:id/:index/:state' element={<UpdateVac />} />
             {/* <Route  path='/vacreport/:id' element={<VacReport/>}/> */}
             

@@ -44,8 +44,8 @@ export default function VetPortal() {
 
    <div className="my-6 ">
 
-   <Link to='#'
-       className=" bg-[#2E4960] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
+   <Link to='dashboard'
+       className=" bg-[#2E4960] px-[15px] hover:bg-[#797979] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
        >DASHBOARD</Link>
 
        <Link to="allpetprofile"
