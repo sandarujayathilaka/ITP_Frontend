@@ -81,7 +81,7 @@ return(
     <div class="min-h-screen  py-5 ml-[17%] pt-20 ">
 
 
-
+<div class="fixed "> 
     <form class="flex items-center mt-10">   
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-1/2 ml-80">
@@ -92,7 +92,8 @@ return(
     </div>
 </form>
 
-<div class="-mt-[42px] absolute ml-[215px]">
+
+<div class="-mt-[42px] fixed ml-[215px]">
 <select id="countries" value={filterOption} onChange={handleFilterChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-15 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
   <option selected value="all">All</option>
   <option value="Available">Available</option>
@@ -102,15 +103,17 @@ return(
 
 </div>
 
-
 <div class="-mt-[58px]">
 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4
      focus:ring-blue-300 font-medium rounded-xl text-sm px-3.5 py-2 text-center ml-[1045px] mt-5 mb-4 dark:bg-blue-600 
      dark:hover:bg-blue-700 dark:focus:ring-blue-800"><Link to="/petprofile/addpet">Add Profile</Link></button>
 </div>
-        <div class='overflow-x-auto w-full mt-10'>
+</div>
+
+
+        <div class='overflow-x-auto w-full mt-36 max-h-[500px] '>
             <table class='mx-auto max-w-5xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
-                <thead class="bg-gray-900">
+            <thead class="bg-gray-900 sticky top-0">
                     <tr class="text-white text-left">
                         <th class="font-semibold text-sm uppercase text-center px-6 py-4"> ID </th>
                         <th class="font-semibold text-sm uppercase text-center px-6 py-4"> BREED </th>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 function AddPetProfile() {
 
@@ -46,7 +47,7 @@ function AddPetProfile() {
         };
         axios.post("http://localhost:5000/api/vet/addpet", newPet)
           .then(() => {
-            alert("Pet added");
+            toast.success("Pet added");
             setName("");
             setSpec("");
             setBreed("");
@@ -57,6 +58,7 @@ function AddPetProfile() {
             setDate("");
             setStatus("");
             setId("");
+            setTimeout(() => window.location.reload(), 3000);
           })
           .catch((err) => {
             alert(`Failed to add pet: ${err}`);
@@ -76,30 +78,30 @@ function AddPetProfile() {
 
               <div class="flex flex-col mb-4 mr-4 pt-8">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="petName">Pet Name</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="petName" id="petName" onChange={(e) => {
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" placeholder='pet name or "Nil"' name="petName" id="petName" onChange={(e) => {
                   setName(e.target.value)
                 }} />
               </div>
               <div class="flex flex-col mb-4 mr-5 pt-8">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="petStatus">Species</label>
-                <select name="petStatus" id="petStatus" onChange={(e) => {
+                <select name="petStatus"  required  id="petStatus" onChange={(e) => {
                   setSpec(e.target.value)
                 }} class="border py-2 px-3 text-grey-800 w-full rounded-xl">
-                  <option selected>Choose Species</option>
+                  <option selected disabled hidden>Choose Species</option>
                   <option value="Cat">Cat</option>
                   <option value="Dog">Dog</option>
                 </select>
               </div>
               <div class="flex flex-col mb-4 mr-5 pt-8">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="breed">Breed</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="breed" id="breed" onChange={(e) => {
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="breed" id="breed" onChange={(e) => {
                   setBreed(e.target.value)
                 }} />
               </div>
 
               <div class="flex flex-col mb-4 mr-5">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="petStatus">Gender</label>
-                <select name="petStatus" id="petStatus" onChange={(e) => {
+                <select name="petStatus" id="petStatus" required onChange={(e) => {
                   setGen(e.target.value)
                 }} class="border py-2 px-3 text-grey-800 w-full rounded-xl">
                   <option selected>Choose Gender</option>
@@ -110,7 +112,7 @@ function AddPetProfile() {
 
               <div class="flex flex-col mb-4 mr-5">
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="size">Weight - ( Kg ) </label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="size" id="size" onChange={(e) => {
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="size" id="size" onChange={(e) => {
                   setSize(e.target.value)
                 }} />
               </div>
@@ -118,7 +120,7 @@ function AddPetProfile() {
             <div class="flex flex-col mb-4 mr-5">
            
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="color">Colour</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="color" id="color" onChange={(e)=>{
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="color" id="color" onChange={(e)=>{
         setColor(e.target.value)}}/>
         </div>
 
@@ -126,7 +128,7 @@ function AddPetProfile() {
         <div class="flex flex-col mb-4 mr-5">
            
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Age</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="age" id="age" onChange={(e)=>{
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="age" id="age" onChange={(e)=>{
         setAge(e.target.value)}}/>
         </div>
             
@@ -135,7 +137,7 @@ function AddPetProfile() {
             <div class="flex flex-col mb-4 mr-5">
           
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="date">Date</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="date" name="date" id="date" onChange={(e)=>{
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="date" name="date" id="date" onChange={(e)=>{
         setDate(e.target.value)}}/>
         </div>
             
@@ -143,7 +145,7 @@ function AddPetProfile() {
            
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="petStatus">Status</label>
                 
-            <select name="petStatus" id="petStatus" onChange={(e)=>{
+            <select name="petStatus" id="petStatus" required onChange={(e)=>{
         setStatus(e.target.value)}}  class="border py-3 px-3 text-grey-800 w-full rounded-xl">
           <option selected>Choose a health Status</option>
          <option value="Available">Available</option>

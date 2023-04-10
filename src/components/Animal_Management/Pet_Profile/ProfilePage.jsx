@@ -45,6 +45,34 @@ export default function ProfilePage() {
   const handlePrint = () => {
     window.print();
   }
+
+  const handleQrPrint = () => {
+    const qrImage = document.getElementById('qr-code');
+    const windowContent = '<!DOCTYPE html>';
+    windowContent += '<html>';
+    windowContent += '<head><title>Print QR Code</title></head>';
+    windowContent += '<body>';
+    windowContent += '<img src="' + qrImage.src + '">';
+    windowContent += '</body>';
+    windowContent += '</html>';
+    const printWin = window.open('', '', 'width=900,height=650');
+    printWin.document.open();
+    printWin.document.write(windowContent);
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+    printWin.close();
+  }
+
+  
+  const handlesPrint = () => {
+    const img = new Image();
+    img.src = qrCode;
+    img.style.display = 'none';
+    document.body.appendChild(img);
+    window.print();
+  };
+
   
 
 
@@ -97,7 +125,7 @@ export default function ProfilePage() {
         <dd class="mt-1 text-lg  text-black sm:col-span-2 sm:mt-0">{Profile.species}</dd>
       </div>
 
- 
+      <button onClick={handlePrint}>Print QR Code</button>
 
     </dl>
   </div>
@@ -107,6 +135,8 @@ export default function ProfilePage() {
 </div>
 
 <img className=' w-48 ml-[1100px] -mt-[225px] ' src={`data:image/png;base64,${qrCode}`} alt="QR code" />
+
+
 
 
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 function AddHealth() {
 
@@ -16,11 +17,19 @@ function AddHealth() {
 
             try {
               await axios.post("http://localhost:5000/api/vet/addreport", newreport);
-              alert('Report saved successfully');
+              toast.success('Report saved successfully',{
+                autoClose: 1500, // Display for 3 seconds
+              });
+              setTimeout(() => window.location.reload(), 2500);
             } catch (error) {
               console.log(error);
-              alert('Failed to save report');
-            }
+
+              if(error.response){
+                const errorMessage = error.response.data.error;
+                toast.error(errorMessage);
+            } else
+            toast.error('Failed to save report');
+          }
           };
 
           const handleVaccinationChange = (index, event) => {
