@@ -60,7 +60,7 @@ export default function VetPortal() {
        className=" bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
        >HEALTH MONITORING</Link>
 
-   <Link to='#'
+   <Link to='spets'
        className=" bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
        >SHELTERING PETS</Link>
    </div>
