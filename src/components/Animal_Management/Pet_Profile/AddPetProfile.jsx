@@ -15,6 +15,7 @@ function AddPetProfile() {
     const [date,setDate] = useState("")
     const [petStatus,setStatus] = useState("")
     const [petId,setId] = useState("")
+    const [image,setImage]=useState("")
 
 
     useEffect(() => {
@@ -43,9 +44,17 @@ function AddPetProfile() {
           size,
           color,
           date,
-          petStatus
+          petStatus,
+          image
         };
-        axios.post("http://localhost:5000/api/vet/addpet", newPet)
+        axios.post("http://localhost:5000/api/vet/addpet", newPet,{
+
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+        })
           .then(() => {
             toast.success("Pet added");
             setName("");
@@ -58,6 +67,7 @@ function AddPetProfile() {
             setDate("");
             setStatus("");
             setId("");
+            setImage("")
             setTimeout(() => window.location.reload(), 3000);
           })
           .catch((err) => {
@@ -65,6 +75,23 @@ function AddPetProfile() {
           });
       }
       
+      function convertToBase64(e){
+
+   
+
+        console.log(e);
+        var reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = ()=>{
+          console.log(reader.result)
+          setImage(reader.result)
+        };
+        reader.onerror=error=>{
+          console.log("Error: ",error)
+        };
+    
+      }
+    
 
 
 
@@ -152,14 +179,13 @@ function AddPetProfile() {
         <option value="Adopted">Adopted</option>
         </select>
         </div>
-      
-            {/* <div class="flex flex-col mb-4 mr-5">
-            <div class="flex justify-between mb-2">
-                <label class="mb-2 font-bold text-lg text-white ml-5" for="petId">PetID</label>
-                <input class="border py-2 px-3 text-grey-800  w-10/12 rounded-xl" type="text"  onChange={(e)=>{
-        setId(e.target.value)}}  name="petId" id="petId" />
+            
+        <div class="flex flex-col mb-4 mr-5">
+           
+                <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Age</label>
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="file" name="img" id="img" onChange={convertToBase64}/>
+                {image==""||image==null?"":<img width={100} height={100} src={image}/>}
         </div>
-            </div> */}
             <div class="ml-80 mt-3 w-full">
             <button class="block bg-primary hover:bg-amber-700 text-white uppercase font-bold text-sm mx-auto  p-4 rounded-3xl" type="submit">Create Account</button>
             </div>

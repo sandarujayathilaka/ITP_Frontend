@@ -19,6 +19,7 @@ export default function UpdatePetProfile(){
     const [color,setColor] = useState("")
     const [date,setDate] = useState("")
     const [petStatus,setStatus] = useState("")
+    const [image,setImage]=useState("")
 
     async function getProfile() {
         try {
@@ -49,6 +50,7 @@ export default function UpdatePetProfile(){
             setDate(new Date(profile.date).toISOString().split('T')[0]);
           }
         setStatus(profile.petStatus);
+        setImage(profile.image)
       }, [profile]);
 
     async function UpdateData(e){
@@ -68,7 +70,8 @@ export default function UpdatePetProfile(){
             size,
             color,
             date,
-            petStatus
+            petStatus,
+            image
         }
 
         console.log(petName)
@@ -80,6 +83,23 @@ export default function UpdatePetProfile(){
         console.error(err);
       }
 
+    }
+
+    function convertToBase64(e){
+
+   
+
+      console.log(e);
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = ()=>{
+        console.log(reader.result)
+        setImage(reader.result)
+      };
+      reader.onerror=error=>{
+        console.log("Error: ",error)
+      };
+  
     }
 
     return(
@@ -168,6 +188,14 @@ export default function UpdatePetProfile(){
     <option value="Available">Available</option>
    <option value="Adopted">Adopted</option>
    </select>
+   </div>
+
+        
+   <div class="flex flex-col mb-4 mr-5">
+           
+           <label class="mb-2 font-bold text-lg text-white ml-5"  for="age">Pet Image</label>
+           <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="file" name="img" id="img" onChange={convertToBase64} />
+              {image==""||image==null?"":<img width={100} height={100} src={image}/>}
    </div>
 
 

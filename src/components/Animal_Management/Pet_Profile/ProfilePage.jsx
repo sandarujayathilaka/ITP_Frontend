@@ -97,10 +97,17 @@ export default function ProfilePage() {
   </div>
   
 
-
 </div>
 
+
+
 <img className=' w-48 ml-[1100px] -mt-[225px] ' src={`data:image/png;base64,${qrCode}`} alt="QR code" />
+
+<img className=' w-48 ml-[1100px] -mt-[455px] ' width={600} height={600} src={Profile.image} />
+
+
+
+
 
 
 
