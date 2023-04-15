@@ -84,8 +84,8 @@ export default function ProfilePage() {
         </div>
 
         <div class="bg-[#D9D9D9] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-lg  text-black font-bold ml-16">Height</dt>
-        <dd class="mt-1 text-lg  text-black  sm:col-span-2 sm:mt-0">{Profile.size}</dd>
+        <dt class="text-lg  text-black font-bold ml-16">Weight</dt>
+        <dd class="mt-1 text-lg  text-black  sm:col-span-2 sm:mt-0">{Profile.weight}</dd>
         </div>
 
         <div class="bg-[#D9D9D9] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">     

@@ -15,11 +15,13 @@ export default function UpdatePetProfile(){
     const [breed,setBreed] = useState("")
     const [gender,setGen] = useState("")
     const [age,setAge] = useState("")
-    const [size,setSize] = useState("")
+    const [weight,setWeight] = useState("")
     const [color,setColor] = useState("")
     const [date,setDate] = useState("")
     const [petStatus,setStatus] = useState("")
     const [image,setImage]=useState("")
+    const [price,setPrice]=useState("")
+
 
     async function getProfile() {
         try {
@@ -44,13 +46,14 @@ export default function UpdatePetProfile(){
         setBreed(profile.breed);
         setGen(profile.gender);
         setAge(profile.age);
-        setSize(profile.size);
+        setWeight(profile.weight);
         setColor(profile.color);
         if (new Date(profile.date).toString() !== 'Invalid Date') {
             setDate(new Date(profile.date).toISOString().split('T')[0]);
           }
         setStatus(profile.petStatus);
         setImage(profile.image)
+        setPrice(profile.price)
       }, [profile]);
 
     async function UpdateData(e){
@@ -67,11 +70,12 @@ export default function UpdatePetProfile(){
             breed,
             gender,
             age,
-            size,
+            weight,
             color,
             date,
             petStatus,
-            image
+            image,
+            price
         }
 
         console.log(petName)
@@ -159,8 +163,8 @@ export default function UpdatePetProfile(){
             <div class="flex flex-col mb-4 mr-5">
         
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="size">Weight (Kg)</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="size" id="size" value={size} onChange={(e)=>{
-        setSize(e.target.value)}}/>
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="size" id="size" value={weight} onChange={(e)=>{
+        setWeight(e.target.value)}}/>
         </div>
            
             <div class="flex flex-col mb-4 mr-5">
@@ -197,6 +201,13 @@ export default function UpdatePetProfile(){
            <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="file" name="img" id="img" onChange={convertToBase64} />
               {image==""||image==null?"":<img width={100} height={100} src={image}/>}
    </div>
+
+   <div class="flex flex-col mb-4 mr-5">
+          
+          <label class="mb-2 font-bold text-lg text-white ml-5" for="price">Price</label>
+          <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="number" value={price}  name="price" min="0" step="0.01" id="price" onChange={(e)=>{
+  setPrice(e.target.value)}}/>
+  </div>
 
 
    <div class="ml-80 mt-3 w-full">

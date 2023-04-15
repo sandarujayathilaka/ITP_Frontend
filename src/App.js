@@ -23,6 +23,7 @@ import Report from './components/Animal_Management/Health_Profile/Report';
 import UpdateVac from './components/Animal_Management/Health_Profile/UpdateVac';
 import Dashboard from './components/Animal_Management/Dashboard/Dashboard';
 import Shelterpets from './components/Animal_Management/Pet_Profile/ShelterPets';
+import Breed from './components/Animal_Management/Pet_Profile/Breed';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
                 <Route  path='addvac/:id/:state' element={<Addvac/>}/>
                 <Route path='dashboard' element={<Dashboard />} />
                 <Route path='spets' element={<Shelterpets />} />
+                <Route path='breed' element={<Breed />} />
             
             </Route>
             

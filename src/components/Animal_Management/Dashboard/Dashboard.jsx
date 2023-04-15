@@ -7,7 +7,13 @@ import { PieChart, Pie, Sector, Cell} from 'recharts';
 
 function Dashboard() {
   const [normalCount, setNormalCount] = useState(0);
+  const [avaCount, setAvaCount] = useState(0);
+  const [adoCount,  setAdoCount] = useState(0);
   const [criticalCount, setCriticalCount] = useState(0);
+  const [payData, setpayData] = useState([]);
+  const [isError, setIsError] = useState("");
+  const [petCount, setPetCount] = useState(0);
+  const [petCountsByIndex, setPetCountsByIndex] = useState([]);
 
   useEffect(() => {
     async function healthCounts() {
@@ -20,6 +26,35 @@ function Dashboard() {
       }
     }
     healthCounts();
+  }, []);
+
+  useEffect(() => {
+    async function petStatusCounts() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/vet/petcount');
+        console.log(response.data.avaCount)
+        setAvaCount(response.data.avaCount);
+        setAdoCount(response.data.adpCount);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    petStatusCounts();
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/booking')
+      .then(response => {
+        const data = response.data;
+        console.log(response);
+        setpayData(data);
+        const filteredData = data.filter(item => item.status === 'SHELTERED');
+        const petCounts = filteredData.map(item => item.mini.length);
+        const totalPetCount = petCounts.reduce((a, b) => a + b, 0);
+        setPetCount(totalPetCount);
+        setPetCountsByIndex(petCounts);
+      })
+      .catch(error => setIsError(error.message));
   }, []);
 
 
@@ -47,8 +82,8 @@ function Dashboard() {
   return (
     <>
 
-<div id="wrapper" class="ml-[500px] mt-[80px] px-4 py-4 mx-auto">
-            <div class="sm:grid sm:h-32 sm:grid-flow-row sm:gap-4 sm:grid-cols-5">
+<div id="wrapper" class="ml-[400px] mt-[80px] px-4 py-4 mx-auto">
+            <div class="sm:grid sm:h-32 mr-[150px] sm:grid-flow-row sm:gap-4 sm:grid-cols-5">
                 <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
                     <div>
                         <div>
@@ -83,8 +118,21 @@ function Dashboard() {
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 9a1 1 0 012 0v8a1 1 0 01-1 1h-8a1 1 0 010-2h5.59L13 10.41l-3.3 3.3a1 1 0 01-1.4 0l-6-6a1 1 0 011.4-1.42L9 11.6l3.3-3.3a1 1 0 011.4 0l6.3 6.3V9z"/></svg>
                             </p>
                         </div>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
+                        <p class="text-3xl font-semibold text-center text-gray-800">{petCount}</p>
+                        <p class="text-lg text-center text-gray-500">Shelterd Pets</p>
+                    </div>
+                </div>
+
+                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                    <div>
+                        <div>
+                            <p class="flex items-center justify-end text-red-500 text-md">
+                                <span class="font-bold">6%</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 9a1 1 0 012 0v8a1 1 0 01-1 1h-8a1 1 0 010-2h5.59L13 10.41l-3.3 3.3a1 1 0 01-1.4 0l-6-6a1 1 0 011.4-1.42L9 11.6l3.3-3.3a1 1 0 011.4 0l6.3 6.3V9z"/></svg>
+                            </p>
+                        </div>
+                        <p class="text-3xl font-semibold text-center text-gray-800">{adoCount}</p>
+                        <p class="text-lg text-center text-gray-500">Adopted Pets</p>
                     </div>
                 </div>
 
@@ -96,8 +144,8 @@ function Dashboard() {
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M17 11a1 1 0 010 2H7a1 1 0 010-2h10z"/></svg>
                             </p>
                         </div>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
+                        <p class="text-3xl font-semibold text-center text-gray-800">{avaCount}</p>
+                        <p class="text-lg text-center text-gray-500">Available Pets</p>
                     </div>
                 </div>
             </div>
@@ -120,7 +168,9 @@ function Dashboard() {
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
+ 
     </PieChart>
+    
     </div>
     </>
   );
