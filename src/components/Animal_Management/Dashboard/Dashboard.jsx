@@ -2,7 +2,8 @@
 
 import axios from 'axios';
 import React, { useState, useEffect,PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell} from 'recharts';
+import { Link } from 'react-router-dom';
+import { PieChart, Pie, Sector, Cell, Legend,BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
 
 function Dashboard() {
@@ -14,6 +15,8 @@ function Dashboard() {
   const [isError, setIsError] = useState("");
   const [petCount, setPetCount] = useState(0);
   const [petCountsByIndex, setPetCountsByIndex] = useState([]);
+  const [lastbreeds, setLastBreed] = useState([]);
+  const [lastPet, setLastPet] = useState([]);
 
   useEffect(() => {
     async function healthCounts() {
@@ -29,10 +32,34 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
+    async function lastbreed() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/vet/lastbreed');
+        setLastBreed(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    lastbreed();
+  }, []);
+
+  useEffect(() => {
+    async function lastPetProfile() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/vet/lastpets');
+        setLastPet(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    lastPetProfile();
+  }, []);
+
+  
+  useEffect(() => {
     async function petStatusCounts() {
       try {
-        const response = await axios.get('http://localhost:5000/api/vet/petcount');
-        console.log(response.data.avaCount)
+        const response = await axios.get('http://localhost:5000/api/vet/petcount')
         setAvaCount(response.data.avaCount);
         setAdoCount(response.data.adpCount);
       } catch (err) {
@@ -46,7 +73,6 @@ function Dashboard() {
     axios.get('http://localhost:5000/api/booking')
       .then(response => {
         const data = response.data;
-        console.log(response);
         setpayData(data);
         const filteredData = data.filter(item => item.status === 'SHELTERED');
         const petCounts = filteredData.map(item => item.mini.length);
@@ -59,8 +85,8 @@ function Dashboard() {
 
 
   const data = [
-    { name: 'Group A', value: normalCount },
-    { name: 'Group B', value: criticalCount },
+    { name: 'Normal Health', value: normalCount },
+    { name: 'Critical Health', value: criticalCount },
 
   ];
 
@@ -79,11 +105,29 @@ function Dashboard() {
     );
   };
 
+
+
+  const speciescount = [
+    {
+      name: 'Shelter Pets',
+      uv:32,
+      pv: avaCount,
+      amt: petCount,
+    },
+    {
+      name: 'Adopted Pets',
+      uv: 32,
+      pv: adoCount,
+      amt: petCount,
+    },
+    
+  ];
+
   return (
     <>
 
-<div id="wrapper" class="ml-[400px] mt-[80px] px-4 py-4 mx-auto">
-            <div class="sm:grid sm:h-32 mr-[150px] sm:grid-flow-row sm:gap-4 sm:grid-cols-5">
+<div id="wrapper" class="ml-[300px] mt-[80px] px-4 py-4 mx-auto">
+            <div class="sm:grid sm:h-32 mr-[50px] sm:grid-flow-row sm:gap-4 sm:grid-cols-5">
                 <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
                     <div>
                         <div>
@@ -151,27 +195,123 @@ function Dashboard() {
             </div>
         </div>
 
-        <div class="ml-[700px]">
 
-        <PieChart width={400} height={400} class="bg-black" >
-      <Pie
-        data={data}
-        cx="50%"
-        cy="50%"
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
- 
-    </PieChart>
-    
-    </div>
+
+        <div class="w-full mt-5 ml-[1000px] h-[500px] max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+  <div class="flex items-center justify-between mb-4">
+    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Breeds</h5>
+    <Link to='/petprofile/breed' class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+      View all
+    </Link>
+  </div>
+  <div class="flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+      {lastbreeds.map(lbreed => (
+        <li key={lbreed._id} class="py-3 sm:py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-1 min-w-0">
+              <div>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                  {lbreed.breed}
+                </p>
+                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                  ({lbreed.date})
+                </p>
+              </div>
+            </div>
+            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+              {lbreed.species}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+
+<div class="w-full ml-[1000px] mt-5 h-[500px] max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+  <div class="flex items-center justify-between mb-4">
+    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Pets</h5>
+    <Link to='/petprofile/breed' class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+      View all
+    </Link>
+  </div>
+  <div class="flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+      {lastPet.map(lpet => (
+        <li key={lpet._id} class="py-3 sm:py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+            <img className=' w-10  rounded-full   '  src={lpet.image} />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                  {lpet.petId} - {lpet.petName}
+                </p>
+                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                  ({lpet.systime})
+                </p>
+              </div>
+            </div>
+            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+              {lpet.species}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+
+<div className='-mt-[1000px] ml-[400px]'>
+  <PieChart width={500} height={400} class="bg-black z-1" >
+    <Pie
+      data={data}
+      cx="50%"
+      cy="50%"
+      labelLine={false}
+      label={renderCustomizedLabel}
+      outerRadius={80}
+      fill="#8884d8"
+      dataKey="value"
+    >
+      {data.map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      ))}
+    </Pie>
+    <Legend />
+  </PieChart>
+  </div>
+
+
+
+  <div className='mt-[150px] ml-[300px]'>
+    <BarChart
+      width={700}
+      height={470}
+      data={speciescount}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+      barSize={50}
+    >
+      <XAxis dataKey="name" scale="point" padding={{ left: 450, right: 490 }} />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <CartesianGrid strokeDasharray="3 3" />
+      <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
+    </BarChart>
+  </div>
+
+
+
     </>
   );
 }

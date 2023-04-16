@@ -72,7 +72,7 @@ return(
         <div class='overflow-x-auto'>
         <div class="fixed ">
   <div class="mt-[40px] absolute ml-[275px] ">
-<select id="countries" value={filterOption} onChange={handleFilterChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-15 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<select id="countries"  value={filterOption} onChange={handleFilterChange} class="bg-[#2E4960] border -ml-[100px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-15 p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
   <option selected value="all">All</option>
   <option value="Critical">Critical</option>
   <option value="Normal">Normal</option>
@@ -83,17 +83,17 @@ return(
  
 <form class="flex items-center mt-10">   
     <label for="simple-search" class="sr-only">Search</label>
-    <div class="relative w-1/2 ml-[370px]">
+    <div class="relative w-1/2 ml-[270px]">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-gray-50 w-[625px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required/>
+        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-white w-[270px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required/>
     </div>
 </form>
 </div>
 <div class='overflow-x-auto w-full max-h-[460px] mt-28 '>
- <table class='mx-auto max-w-4xl w-full whitespace-nowrap mt-5 rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
-                <thead class="bg-gray-900 sticky top-0">
+ <table class='mx-auto shadow-2xl max-w-4xl w-full whitespace-nowrap mt-5 rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
+                <thead class="bg-[#2E4960] sticky top-0">
                     <tr class="text-white text-left">
                         <th class="font-semibold text-sm uppercase text-center px-6 py-4"> ID </th>
                         <th class="font-semibold text-sm uppercase text-center px-6 py-4 ">Status </th>

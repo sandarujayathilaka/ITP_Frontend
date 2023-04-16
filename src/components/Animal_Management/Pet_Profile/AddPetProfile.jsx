@@ -14,7 +14,7 @@ function AddPetProfile() {
   const [color, setColor] = useState("")
   const [date, setDate] = useState("")
   const [petStatus, setStatus] = useState("")
-  const [petId, setId] = useState("")
+  const [pId, setId] = useState("")
   const [image, setImage] = useState("")
   const [price, setPrice] = useState("")
   const [allbreeds, setAllBreed] = useState([]);
@@ -49,10 +49,12 @@ function AddPetProfile() {
   console.log(breed)
 
   function addPet(e) {
+
     e.preventDefault();
+
     const newPet = {
       petName,
-      petId,
+      pId,
       species,
       breed,
       gender,
@@ -64,6 +66,7 @@ function AddPetProfile() {
       image,
       price
     };
+
     axios.post("http://localhost:5000/api/vet/addpet", newPet, {
 
       headers: {

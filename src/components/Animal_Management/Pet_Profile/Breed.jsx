@@ -129,10 +129,14 @@ export default function Breed() {
   return (
     <div>
 
+<button onClick={openModal} className="bg-blue-500 mt-[100px] ml-[1150px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        New Breed
+      </button>
 
-      <div class='overflow-x-auto w-1/2 mt-36 ml-[500px] max-h-[500px] '>
-        <table class='mx-auto max-w-5xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
-          <thead class="bg-yellow-500 sticky top-0">
+
+      <div class='overflow-x-auto w-1/2 mt-10 ml-[500px] max-h-[500px] '>
+        <table class='mx-auto max-w-5xl w-full whitespace-nowrap shadow-2xl rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
+          <thead class="bg-[#2E4960] sticky top-0">
             <tr class="text-white text-left">
 
               <th class="font-semibold text-sm uppercase text-center px-6 py-4"> BREED </th>
@@ -181,17 +185,13 @@ export default function Breed() {
         </table>
       </div>
 
-
-      <button onClick={openModal} className="bg-blue-500 m-[500px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Book Now
-      </button>
       <Modal isOpen={modalIsOpen} className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={addbreed}>
+        <form className="bg-white shadow-md rounded px-8 ml-[150px] pt-6 pb-8 mb-4" onSubmit={addbreed}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             BREED :
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Username" name="breed" id="breed" onChange={(e) => {
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Eg : Bulldog" name="breed" id="breed" onChange={(e) => {
               setBreed(e.target.value)
             }} />
           </div>
@@ -200,7 +200,7 @@ export default function Breed() {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Species :
             </label>
-            <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Username" name="breed" id="breed" onChange={(e) => {
+            <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Eg : Bulldog" name="breed" id="breed" onChange={(e) => {
               setSpecies(e.target.value)
             }} >
 
@@ -225,12 +225,12 @@ export default function Breed() {
 
 
       <Modal isOpen={upModelIsOpen} className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={UpdateData}>
+        <form className="bg-white shadow-md  ml-[150px] rounded px-8 pt-6 pb-8 mb-4" onSubmit={UpdateData}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
+              BREED
             </label>
-            <input defaultvalue={breedId} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Username" name="breed" id="breed" onChange={(e) => {
+            <input defaultvalue={breedId} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Eg : Bulldog" name="breed" id="breed" onChange={(e) => {
               setBreed(e.target.value)
             }} />
           </div>
@@ -239,7 +239,7 @@ export default function Breed() {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Species :
             </label>
-            <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Username" name="breed" id="breed" onChange={(e) => {
+            <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Dog/Cat" name="breed" id="breed" onChange={(e) => {
               setSpecies(e.target.value)
             }} >
 
@@ -253,8 +253,8 @@ export default function Breed() {
 
 
 
-          <div className="flex items-center justify-between">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          <div className="flex items-center justify-between ">
+            <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
               Add
             </button>
             <button onClick={closeUpModal} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
