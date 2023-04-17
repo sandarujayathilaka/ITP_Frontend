@@ -24,7 +24,7 @@ function AddHealth() {
     };
 
     try {
-      await axios.put(`http://localhost:5000/api/vet/addvac/${pid}`, newreport);
+      await axios.put(`http://localhost:5000/api/health/addvac/${pid}`, newreport);
       alert('Report saved successfully');
     } catch (error) {
       console.log(error);
@@ -79,38 +79,40 @@ function AddHealth() {
           </div>
 
           {vaccinations.map((vaccination, index) => (
-            <div key={index}>
+            <div key={index} class="flex flex-row items-center space-x-10 " >
+              <div className="flex flex-col">
 
-              <label htmlFor="name"
-                className=" mb-2 w-[89px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
-              >
-                Vaccine :
-              </label>
-              <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter Vaccination Name" />
+                <label htmlFor="name"
+                  className=" mb-2 w-[89px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
+                >
+                  Vaccine :
+                </label>
+                <input type="text" name="name" value={vaccination.name} onChange={(event) => handleVaccinationChange(index, event)} className="py-2 px-3 w-[300px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter Vaccination Name" />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="dateGiven"
+                  className=" mb-2 w-[100px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
+                >
+                  Date Given :
+                </label>
+                <input type="date" name="dateGiven" value={vaccination.dateGiven} onChange={(event) => handleVaccinationChange(index, event)}
+                  className="py-2 px-3 w-[150px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your pet's ID" />
+              </div>
+              <div className="flex flex-col">
 
-
-              <label htmlFor="dateGiven"
-                className=" mb-2 w-[89px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
-              >
-                Date Given :
-              </label>
-              <input type="date" name="dateGiven" value={vaccination.dateGiven} onChange={(event) => handleVaccinationChange(index, event)}
-                className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your pet's ID" />
-
-
-              <label htmlFor="expirationDate"
-                className=" mb-2 w-[89px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
-              >
-                Expiration Date:
-              </label>
-              <input type="date" name="expirationDate" value={vaccination.expirationDate} onChange={(event) => handleVaccinationChange(index, event)}
-                className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your pet's ID" />
-
+                <label htmlFor="expirationDate"
+                  className=" mb-2 w-[150px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
+                >
+                  Expiration Date:
+                </label>
+                <input type="date" name="expirationDate" value={vaccination.expirationDate} onChange={(event) => handleVaccinationChange(index, event)}
+                  className="py-2 px-3 w-[150px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your pet's ID" />
+              </div>
 
               <button onClick={() => handleRemoveVaccination(index)}
-                className="bg-red-600 rounded-[10px] mt-5 h-10 w-[90px] hover:bg-red-800 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
+                className="bg-red-600 rounded-[10px] mt-10 h-10 w-[90px] hover:bg-red-800 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
 
               >
                 Remove

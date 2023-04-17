@@ -18,8 +18,6 @@ export default function ProfilePage() {
             try{
             const res = await axios.get(`http://localhost:5000/api/vet/profile/${pid}`)
                 setProfile(res.data.profile)
-               
-                console.log(Profile)
                 
             }catch(err){
 
@@ -64,8 +62,8 @@ export default function ProfilePage() {
         </div>
 
         <div class="bg-[#D9D9D9] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-lg  text-black font-bold ml-16">Age</dt>
-        <dd class="mt-1 text-lg  text-black  sm:col-span-2 sm:mt-0">{Profile.age}</dd>
+        <dt class="text-lg  text-black font-bold ml-16">DOB</dt>
+        <dd class="mt-1 text-lg  text-black  sm:col-span-2 sm:mt-0">{Profile.birth}</dd>
         </div>
 
         <div class="bg-[#D9D9D9] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -103,7 +101,7 @@ export default function ProfilePage() {
 
 <img className=' w-48 ml-[1100px] -mt-[225px] ' src={`data:image/png;base64,${qrCode}`} alt="QR code" />
 
-<img className=' w-48 ml-[1100px] -mt-[455px] ' width={600} height={600} src={Profile.image} />
+<img className=' w-48 ml-[1100px] -mt-[455px] rounded-md ' width={600} height={600} src={Profile.image} />
 
 
 

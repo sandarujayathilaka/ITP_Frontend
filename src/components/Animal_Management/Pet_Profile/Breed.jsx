@@ -15,7 +15,7 @@ export default function Breed() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/vet/getbreed`)
+      .get(`http://localhost:5000/api/petbreed/getbreed`)
       .then((response) => {
         console.log(response.data.allbreed);
         setAllBreed(response.data.allbreed);
@@ -34,7 +34,7 @@ export default function Breed() {
       speciesOne
 
     };
-    axios.post("http://localhost:5000/api/vet/addbreed", newBreed)
+    axios.post("http://localhost:5000/api/petbreed/addbreed", newBreed)
       .then(() => {
 
         setBreed("");
@@ -104,7 +104,7 @@ export default function Breed() {
       }
 
 
-     await axios.put(`http://localhost:5000/api/vet/breedupdate/${upId}`,newbreed)
+     await axios.put(`http://localhost:5000/api/petbreed/breedupdate/${upId}`,newbreed)
       alert("post Updated !!")
 
      }catch (err){
@@ -114,7 +114,7 @@ export default function Breed() {
   }
 
   const onDelete =(id)=>{
-    axios.delete(`http://localhost:5000/api/vet/deletebreed/${id}`).then((res)=>{
+    axios.delete(`http://localhost:5000/api/petbreed/deletebreed/${id}`).then((res)=>{
 
     alert("Profile Deleted!!")
    
@@ -124,18 +124,49 @@ export default function Breed() {
          })
 }
 
+function filterContent(breed, searchTerm) {
+ 
+  const result = breed.filter(
+    (r) =>
+      r.breed.toLowerCase().includes(searchTerm.toLowerCase())
+     
+     
+  );
+  setAllBreed(result);
+}
+
+
+
+const handleTextSearch = (e) => {
+  const searchTerm = e.currentTarget.value;
+  axios.get("http://localhost:5000/api/petbreed/getbreed").then((res) => {
+    if (res.data.allbreed) {
+      filterContent(res.data.allbreed, searchTerm);
+    }
+  });
+};
+
 
 
   return (
     <div>
 
-<button onClick={openModal} className="bg-blue-500 mt-[100px] ml-[1150px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        New Breed
+<button onClick={openModal} className="bg-blue-500 mt-[150px] ml-[1150px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        ADD Breed
       </button>
 
+      <form class="flex items-center -mt-[40px] ml-[270px]">   
+    <label for="simple-search" class="sr-only">Search</label>
+    <div class="relative w-[300px] ml-[230px]">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+        </div>
+        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID or Breed" required/>
+    </div>
+</form>
+<div class='overflow-x-auto w-1/2 mt-[5px] ml-[500px] max-h-[500px] '>
 
-      <div class='overflow-x-auto w-1/2 mt-10 ml-[500px] max-h-[500px] '>
-        <table class='mx-auto max-w-5xl w-full whitespace-nowrap shadow-2xl rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
+        <table class='mx-auto max-w-5xl mt-10 w-full whitespace-nowrap shadow-2xl rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto'>
           <thead class="bg-[#2E4960] sticky top-0">
             <tr class="text-white text-left">
 

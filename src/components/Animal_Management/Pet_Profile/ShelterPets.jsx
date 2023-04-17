@@ -34,130 +34,109 @@ const GetBooking = () => {
   }, []);
 
 
-  function calculateprice() {
-    const income = payData
-
-      .filter(({ status }) => status === "FINISHED")
-      .reduce((total, { price }) => total + price, 0);
-
-    return income;
+  function filterContent(book, searchTerm) {
+    console.log(book)
+    console.log(searchTerm)
+    const result = book.filter(
+      (r) =>
+        r.
+        cus_id.includes(searchTerm) 
+    );
+    setpayData(result);
   }
 
+  const handleTextSearch = (e) => {
+    const searchTerm = e.currentTarget.value;
+    axios.get("http://localhost:5000/api/booking").then((res) => {
+      if (res.data) {
+        filterContent(res.data, searchTerm);
+      }
+    });
+  };
 
-  const max = calculateprice();
 
   return (
 
     <>
-      {/* //BALANCE BAR */}
 
-      <div class="flex ml-48 justify-center flex-cols-1 gap-4 mt-20 ">
-        <div class="bg-blue-500 dark:bg-sky-900 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-blue-600 dark:border-gray-600 text-white font-medium group">
-          <div class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
-            <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </div>
-          <div class="text-right">
-            <p class="text-2xl"> &nbsp; Rs. {max}</p>
-            <p>Balances</p>
-          </div>
+      <div class='overflow-x-auto w-full mt-32 max-h-[500px] ml-[128px]'>
+      <form class="flex items-center ml-7">   
+    <label for="simple-search" class="sr-only">Search</label>
+    <div class="relative w-[300px] ml-[230px]">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
+        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID or Breed" required/>
+    </div>
+    </form>
+        <table class='mx-auto mt-10 max-w-5xl shadow-2xl w-full whitespace-nowrap rounded-lg bg-gray-300 divide-y divide-gray-300 overflow-hidden table-auto'>
+          <thead class="bg-[#2E4960] sticky top-0">
+            <tr class="text-white text-left">
+              <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Customer ID </th>
+              <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Price Status </th>
+              <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Pet Count </th>
+              <th class="font-semibold text-sm uppercase px-6 py-4 text-center">Pet Id's </th>
+              <th class="font-semibold text-sm uppercase px-6 py-4 text-center">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-400">
+            {payData.filter(data => data.status === "SHELTERED" || data.status === "CLOSED").map((data) => {
 
-        <p>Total number of pets: {petCount}</p>
-        {petCountsByIndex.map((count, index) => (
+              const { _id, cus_id, contactNumbers, description, petCount, status, mini } = data;
 
-          <p key={index}>Index {index}: {count} pets</p>
+              const notify = () => toast.success('Booking Verified ', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
 
-        ))}
+              });
 
-      </div>
+              <div>
 
-      {isError !== "" && <h2>{isError}</h2>}
-      <div class="mt-4 mb-16 mr-8 rounded-lg">
-        <div class="w-full overflow-hidden  shadow-xs">
-          <div class="w-full overflow-x-auto">
-            <table class="table-auto rounded-lg ml-80">
-              <thead>
-                <tr class="text-base font-semibold tracking-wide  text-gray-500 uppercase border-b dark:border-gray-900 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                  <th className="px-14 py-4">Customer ID</th>
-                  <th className="px-14 py-4">Price Status </th>
-                  <th className="px-14 py-4">Pet Count</th>
-                  <th className="px-14 py-4">Pet Id's</th>
-                  <th className="px-14 py-4">Action</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                {payData.filter(data => data.status === "SHELTERED" || data.status === "CLOSED").map((data) => {
+              </div>
 
-                  const {_id, cus_id, contactNumbers, description, petCount, status, mini} = data;
+              const count = 0;
+              function updateTransaction() {
+                const updatedTransaction = {
+                  status: 'CLOSED',
+                  cus_id: cus_id,
+                  contactNumbers: contactNumbers,
+                  description: description,
+                };
 
-                  const notify = () => toast.success('Booking Verified ', {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
+                axios.put(`http://localhost:5000/api/booking/${_id}`, updatedTransaction)
+                  .then(response => {
 
+                  })
+                  .catch((error) => {
+                    console.log(error);
                   });
+              }
 
-                  <div>
 
-                  </div>
+              return (
+                <tr class="text-black text-left" key={_id}>
+                  <td class="py-3 px-6 text-center">{cus_id}</td>
+                  <td class="text-center px-14 py-3 text-sm">{status}</td>
+                  <td class=" text-center px-14 py-3 text-sm">{petCount}</td>
+                  <td class="text-center px-14 py-3 text-sm">
 
-                  const count = 0;
-                  function updateTransaction() {
-                    const updatedTransaction = {
-                      status: 'CLOSED',
-                      cus_id: cus_id,
-                      contactNumbers: contactNumbers,
-                      description: description,
-                    };
+                    {data.mini.map((miniitem) => (<><p>{miniitem.pid}</p></>))}
+                  </td>
 
-                    axios.put(`http://localhost:5000/api/booking/${_id}`, updatedTransaction)
-                      .then(response => {
-
-                        console.log(_id);
-                        console.log(cus_id);
-                        console.log(response.data);
-                        calculateprice();
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  }
-
-                  return (
-
-                    <tr key={_id} class="font-semibold bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
-                      <td class="px-14 py-4">
-                        <div class="flex items-center text-sm">
-
-                          <div>
-                            <p class="font-semibold">{cus_id}</p>
-
-                          </div>
-                        </div>
-                      </td>
-                      <td class="text-center px-14 py-3 text-sm">{status}</td>
-                      <td class=" text-center px-14 py-3 text-sm">{petCount}</td>
-                      <td class="text-center px-14 py-3 text-sm">
-
-                        {data.mini.map((miniitem) => (<><p>{miniitem.pid}</p></>))}
-                      </td>
-
-                      <td class="px-14 py-4 text-sm">
-                        <button class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100" onClick={() => { notify(); refreshPage(); updateTransaction(); }}> Verify  </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-        </div>
+                  <td class="px-14 py-4 text-sm">
+                    <button class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100" onClick={() => { notify(); refreshPage(); updateTransaction(); }}> Verify  </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
 

@@ -47,13 +47,15 @@ function App() {
                 <Route path='dashboard' element={<Dashboard />} />
                 <Route path='spets' element={<Shelterpets />} />
                 <Route path='breed' element={<Breed />} />
+                <Route path='upvac/:id/:index/:state' element={<UpdateVac />} />
+             
             
             </Route>
-            
-            <Route path='/UpdateHealth/:id' element={<UpdateHealth/>}/>
+            <Route path='UpdateHealth/:id' element={<UpdateHealth/>}/>
+         
             <Route path='/test/:id/qrcode' element={<Test />} />
            
-            <Route path='/upvac/:id/:index/:state' element={<UpdateVac />} />
+          
             {/* <Route  path='/vacreport/:id' element={<VacReport/>}/> */}
             
             {/* <Route path='/report/:id' element={<Report/>} /> */}

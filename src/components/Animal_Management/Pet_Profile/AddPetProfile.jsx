@@ -9,7 +9,7 @@ function AddPetProfile() {
   const [species, setSpec] = useState("")
   const [breed, setBreed] = useState("")
   const [gender, setGen] = useState("")
-  const [age, setAge] = useState("")
+  const [birth, setBirth] = useState("")
   const [weight, setWeight] = useState("")
   const [color, setColor] = useState("")
   const [date, setDate] = useState("")
@@ -36,7 +36,7 @@ function AddPetProfile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/vet/getbreed`)
+      .get(`http://localhost:5000/api/petbreed/getbreed`)
       .then((response) => {
         console.log(response.data.allbreed);
         setAllBreed(response.data.allbreed);
@@ -58,7 +58,7 @@ function AddPetProfile() {
       species,
       breed,
       gender,
-      age,
+      birth,
       weight,
       color,
       date,
@@ -81,7 +81,7 @@ function AddPetProfile() {
         setSpec("");
         setBreed("");
         setGen("");
-        setAge("");
+        setBirth("");
         setWeight("");
         setColor("");
         setDate("");
@@ -118,7 +118,7 @@ function AddPetProfile() {
 
   return (
     <>
-      <div class="flex justify-center items-center  h-full w-full bg-white pt-20">
+      <div class="flex justify-center items-center  h-full w-full bg-white pt-5">
         <div class="w-2/3 bg-[#34495E] rounded-3xl shadow-2xl p-8 m-4 ml-64 mt-16">
           <h1 class="block w-full text-center text-white text-3xl font-bold mb-6">Pet Registration</h1>
 
@@ -126,7 +126,7 @@ function AddPetProfile() {
 
             <div class="flex flex-col mb-4 mr-4 pt-8">
               <label class="mb-2 font-bold text-lg text-white ml-5" for="petName">Pet Name</label>
-              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" placeholder='pet name or "Nil"' name="petName" id="petName" onChange={(e) => {
+              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" placeholder='Pet Name or "Nil"' name="petName" id="petName" onChange={(e) => {
                 setName(e.target.value)
               }} />
             </div>
@@ -145,6 +145,7 @@ function AddPetProfile() {
               <select class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="breed" id="breed" onChange={(e) => {
                 setBreed(e.target.value)
               }}>
+                <option>Select the Breed</option>
                 {allbreeds.map((breed) => (
                   <option key={breed._id} value={breed.breed}>
                     {breed.breed}
@@ -167,7 +168,7 @@ function AddPetProfile() {
 
             <div class="flex flex-col mb-4 mr-5">
               <label class="mb-2 font-bold text-lg text-white ml-5" for="size">Weight - ( Kg ) </label>
-              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="number" min="0" name="size" id="size" onChange={(e) => {
+              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="number" min="0" placeholder='Eg: 25.5' step="0.01" name="size" id="size" onChange={(e) => {
                 setWeight(e.target.value)
               }} />
             </div>
@@ -175,7 +176,7 @@ function AddPetProfile() {
             <div class="flex flex-col mb-4 mr-5">
 
               <label class="mb-2 font-bold text-lg text-white ml-5" for="color">Colour</label>
-              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="color" id="color" onChange={(e) => {
+              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" placeholder='Eg: Black' name="color" id="color" onChange={(e) => {
                 setColor(e.target.value)
               }} />
             </div>
@@ -183,9 +184,9 @@ function AddPetProfile() {
 
             <div class="flex flex-col mb-4 mr-5">
 
-              <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Age</label>
-              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="text" name="age" id="age" onChange={(e) => {
-                setAge(e.target.value)
+              <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Birth Day</label>
+              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="date" name="birth" id="birth" onChange={(e) => {
+                setBirth(e.target.value)
               }} />
             </div>
 
@@ -214,16 +215,16 @@ function AddPetProfile() {
 
             <div class="flex flex-col mb-4 mr-5">
 
-              <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Age</label>
+              <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Image</label>
               <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="file" name="img" id="img" onChange={convertToBase64} />
-              {image == "" || image == null ? "" : <img width={100} height={100} src={image} />}
+              {image === "" || image === null ? "" : <img alt='pet' width={100} height={100} src={image} />}
             </div>
 
 
             <div class="flex flex-col mb-4 mr-5">
 
               <label class="mb-2 font-bold text-lg text-white ml-5" for="price">Price</label>
-              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="number" name="price" min="0" step="0.01" id="price" onChange={(e) => {
+              <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" required type="number" name="price" placeholder='Eg: 25500.00' min="0" step="0.01" id="price" onChange={(e) => {
                 setPrice(e.target.value)
               }} />
             </div>
@@ -231,7 +232,7 @@ function AddPetProfile() {
 
 
 
-            <div class="ml-50 mt-3 w-full">
+            <div class="-ml-[320px] mt-[120px] w-full">
               <button class="block bg-primary hover:bg-amber-700 text-white uppercase font-bold text-sm mx-auto  p-4 rounded-3xl" type="submit">Create Account</button>
             </div>
 

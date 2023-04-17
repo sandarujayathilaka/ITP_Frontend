@@ -15,7 +15,7 @@ const Report = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(`http://localhost:5000/api/vet/getreport/${id}`);
+        const res = await axios.get(`http://localhost:5000/api/health/getreport/${id}`);
         const reportdata = res.data.petReport;
         setvaccinations(reportdata.vaccinations);
         console.log(reportdata.vaccinations)

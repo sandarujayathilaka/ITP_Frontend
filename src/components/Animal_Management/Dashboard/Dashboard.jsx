@@ -21,7 +21,7 @@ function Dashboard() {
   useEffect(() => {
     async function healthCounts() {
       try {
-        const response = await axios.get('http://localhost:5000/api/vet/statuscount');
+        const response = await axios.get('http://localhost:5000/api/petstatus/statuscount');
         setNormalCount(response.data.normalCount);
         setCriticalCount(response.data.criticalCount);
       } catch (err) {
@@ -34,7 +34,7 @@ function Dashboard() {
   useEffect(() => {
     async function lastbreed() {
       try {
-        const response = await axios.get('http://localhost:5000/api/vet/lastbreed');
+        const response = await axios.get('http://localhost:5000/api/petstatus/lastbreed');
         setLastBreed(response.data);
       } catch (err) {
         console.error(err);
@@ -46,7 +46,7 @@ function Dashboard() {
   useEffect(() => {
     async function lastPetProfile() {
       try {
-        const response = await axios.get('http://localhost:5000/api/vet/lastpets');
+        const response = await axios.get('http://localhost:5000/api/petstatus/lastpets');
         setLastPet(response.data);
       } catch (err) {
         console.error(err);
@@ -59,7 +59,7 @@ function Dashboard() {
   useEffect(() => {
     async function petStatusCounts() {
       try {
-        const response = await axios.get('http://localhost:5000/api/vet/petcount')
+        const response = await axios.get('http://localhost:5000/api/petstatus/petcount')
         setAvaCount(response.data.avaCount);
         setAdoCount(response.data.adpCount);
       } catch (err) {
@@ -111,24 +111,24 @@ function Dashboard() {
     {
       name: 'Shelter Pets',
       uv:32,
-      pv: avaCount,
+      pv: petCount,
       amt: petCount,
     },
     {
       name: 'Adopted Pets',
       uv: 32,
       pv: adoCount,
-      amt: petCount,
+      amt: adoCount,
     },
     
   ];
 
   return (
-    <>
-
-<div id="wrapper" class="ml-[300px] mt-[80px] px-4 py-4 mx-auto">
-            <div class="sm:grid sm:h-32 mr-[50px] sm:grid-flow-row sm:gap-4 sm:grid-cols-5">
-                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
+    <div className='bg-gray-200'>
+<div>.</div>
+<div id="wrapper" class="ml-[300px] mt-[70px] px-4 py-4 mx-auto">
+            <div class="sm:grid sm:h-32 mr-[50px] sm:grid-flow-row sm:gap-4 sm:grid-cols-5 ">
+                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-[#f5f5f5] shadow-md border border-gray-300 rounded">
                     <div>
                         <div>
                             <p class="flex items-center justify-end text-green-500 text-md">
@@ -141,7 +141,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
+                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-[#f5f5f5] shadow-md border border-gray-300 rounded">
                     <div>
                         <div>
                             <p class="flex items-center justify-end text-green-500 text-md">
@@ -154,7 +154,7 @@ function Dashboard() {
                     </div>
                 </div>
     
-                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-[#f5f5f5] shadow-md border border-gray-300 rounded sm:mt-0">
                     <div>
                         <div>
                             <p class="flex items-center justify-end text-red-500 text-md">
@@ -167,7 +167,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-[#f5f5f5] shadow-md border border-gray-300 rounded sm:mt-0">
                     <div>
                         <div>
                             <p class="flex items-center justify-end text-red-500 text-md">
@@ -180,7 +180,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div id="jh-stats-neutral" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                <div id="jh-stats-neutral" class="flex flex-col justify-center px-4 py-4 mt-4 bg-[#f5f5f5] shadow-md border border-gray-300 rounded sm:mt-0">
                     <div>
                         <div>
                             <p class="flex items-center justify-end text-gray-500 text-md">
@@ -197,9 +197,9 @@ function Dashboard() {
 
 
 
-        <div class="w-full mt-5 ml-[1000px] h-[500px] max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full mt-5 ml-[1000px] h-[500px] max-w-md  p-4 bg-[#f5f5f5] shadow-md border border-gray-200 rounded-lg  sm:p-8 ">
   <div class="flex items-center justify-between mb-4">
-    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Breeds</h5>
+    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-Black">Latest Breeds</h5>
     <Link to='/petprofile/breed' class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
       View all
     </Link>
@@ -211,15 +211,15 @@ function Dashboard() {
           <div class="flex items-center space-x-4">
             <div class="flex-1 min-w-0">
               <div>
-                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                <p class="text-lg font-bold text-gray-900 dark:text-Black">
                   {lbreed.breed}
                 </p>
-                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                <p className="text-sm text-gray-500 truncate dark:text-gray-600">
                   ({lbreed.date})
                 </p>
               </div>
             </div>
-            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-Black">
               {lbreed.species}
             </div>
           </div>
@@ -230,9 +230,9 @@ function Dashboard() {
 </div>
 
 
-<div class="w-full ml-[1000px] mt-5 h-[500px] max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+<div class="w-full mt-5 ml-[1000px] h-[500px] max-w-md  p-4 bg-[#f5f5f5] shadow-md border border-gray-200 rounded-lg  sm:p-8 ">
   <div class="flex items-center justify-between mb-4">
-    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Pets</h5>
+    <h5 class="text-xl font-bold leading-none text-Black ">Latest Pets</h5>
     <Link to='/petprofile/breed' class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
       View all
     </Link>
@@ -247,15 +247,15 @@ function Dashboard() {
             </div>
             <div class="flex-1 min-w-0">
               <div>
-                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                <p class="text-lg font-bold text-Black">
                   {lpet.petId} - {lpet.petName}
                 </p>
-                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                <p className="text-sm text-gray-500 truncate">
                   ({lpet.systime})
                 </p>
               </div>
             </div>
-            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            <div class="inline-flex items-center text-base font-semibold text-black">
               {lpet.species}
             </div>
           </div>
@@ -266,8 +266,9 @@ function Dashboard() {
 </div>
 
 
-<div className='-mt-[1000px] ml-[400px]'>
-  <PieChart width={500} height={400} class="bg-black z-1" >
+<div className='-mt-[1015px] ml-[316px] h-[450px] bg-[#f5f5f5] shadow-md border border-gray-200 rounded-lg  w-[660px] '>
+  <div className='ml-[80px]'>
+  <PieChart width={500} height={400} class="bg-black z-1 ml-[100px]" >
     <Pie
       data={data}
       cx="50%"
@@ -285,10 +286,12 @@ function Dashboard() {
     <Legend />
   </PieChart>
   </div>
+  </div>
 
 
 
-  <div className='mt-[150px] ml-[300px]'>
+  <div className='mt-[20px] ml-[316px] h-[550px] bg-[#f5f5f5] shadow-md border border-gray-200 rounded-lg  w-[660px] '>
+  <div className='ml-[-30px] mt-[70px]'>
     <BarChart
       width={700}
       height={470}
@@ -309,10 +312,11 @@ function Dashboard() {
       <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
     </BarChart>
   </div>
+</div>
+<div>.</div>
 
 
-
-    </>
+    </div>
   );
 }
 

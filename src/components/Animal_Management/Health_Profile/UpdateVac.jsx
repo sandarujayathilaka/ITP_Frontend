@@ -20,7 +20,7 @@ export default function UpdateVac() {
     console.log("hidfd")
         async function fetchData() {
           try {
-            const res = await axios.get(`http://localhost:5000/api/vet/getreport/${pid}`);
+            const res = await axios.get(`http://localhost:5000/api/health/getreport/${pid}`);
             const reportdata = res.data.petReport;
             console.log(reportdata.vaccinations)
             setVaccinations(reportdata.vaccinations);
@@ -52,7 +52,7 @@ export default function UpdateVac() {
 
             try {
                
-              await axios.put(`http://localhost:5000/api/vet/reportupdate/${pid}`, newreport);
+              await axios.put(`http://localhost:5000/api/health/reportupdate/${pid}`, newreport);
               alert('Report saved successfully');
             } catch (error) {
               console.log(error);
@@ -66,8 +66,8 @@ export default function UpdateVac() {
 
     return (
       <>
-      <div className="absolute top-62 left-386 w-[900px] h-936 bg-[#2F333624] rounded-3xl shadow-2xl ml-[29%] mt-[5%]">
-      <h1 class="text-center text-3xl mt-5 font-bold">Vaccination Profile Registration</h1>
+      <div className="absolute top-62 left-386 w-[900px] h-936 bg-[#2F333624] rounded-3xl shadow-2xl ml-[29%] mt-[10%]">
+      <h1 class="text-center text-3xl mt-5 font-bold">Vaccination Details Updation</h1>
       <form className="flex flex-col gap-4 p-8" onSubmit={handleSubmit}>        
       <div className="flex flex-col">
           <label htmlFor="petId"
@@ -101,48 +101,61 @@ export default function UpdateVac() {
   </button>
 ) : (
   <>
-    <label for="name">Vaccine name:</label>
-    <input
-  type="text"
-  value={vaccinations[index].name}
-  onChange={(e) => {
-    const updatedVaccinations = [...vaccinations]; // make a copy of the state array
-    updatedVaccinations[index].name = e.target.value; // set the updated value for the corresponding element
-    setVaccinations(updatedVaccinations); // set the updated array back to state
-  }}/>
-
+<div class="flex flex-row items-center space-x-16">
+    <div className="flex flex-col">
+        <label htmlFor="name" className="mb-2 font-bold">Vaccine name:</label>
+        <input
+            id="name"
+            type="text"
+            value={vaccinations[index].name}
+            onChange={(e) => {
+                const updatedVaccinations = [...vaccinations];
+                updatedVaccinations[index].name = e.target.value;
+                setVaccinations(updatedVaccinations);
+            }}
+            className="p-2 border border-gray-300 w-96 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+    </div>
       
-    <label>Date Given:</label>
-    <input
-  type="date"
-  value={vaccinations[index].dateGiven}
-  onChange={(e) => {
-    const updatedVaccinations = [...vaccinations]; // make a copy of the state array
-    updatedVaccinations[index].dateGiven = e.target.value; // set the updated value for the corresponding element
-    setVaccinations(updatedVaccinations); // set the updated array back to state
-  }}
-/>
+    <div className="flex flex-col">
+        <label htmlFor="dateGiven" className="mb-2 font-bold">Date Given:</label>
+        <input
+            id="dateGiven"
+            type="date"
+            value={vaccinations[index].dateGiven}
+            onChange={(e) => {
+                const updatedVaccinations = [...vaccinations];
+                updatedVaccinations[index].dateGiven = e.target.value;
+                setVaccinations(updatedVaccinations);
+            }}
+            className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+    </div>
 
-
-    <label>Expiration Date:</label>
-    <input
-  type="date"
-  value={vaccinations[index].expirationDate}
-  onChange={(e) => {
-    const updatedVaccinations = [...vaccinations]; // make a copy of the state array
-    updatedVaccinations[index].expirationDate = e.target.value; // set the updated value for the corresponding element
-    setVaccinations(updatedVaccinations); // set the updated array back to state
-  }}
-/>
+    <div className="flex flex-col">
+        <label htmlFor="expirationDate" className="mb-2 font-bold">Expiration Date:</label>
+        <input
+            id="expirationDate"
+            type="date"
+            value={vaccinations[index].expirationDate}
+            onChange={(e) => {
+                const updatedVaccinations = [...vaccinations];
+                updatedVaccinations[index].expirationDate = e.target.value;
+                setVaccinations(updatedVaccinations);
+            }}
+            className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+    </div>
+</div>
 
   </>
 )}
 
 <button type="submit"
-            className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[500px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
+            className="bg-blue-600 rounded-[10px] mt-5 h-10 w-[150px] m-auto hover:bg-blue-700 text-white font-bold py-2 px-4 shadow focus:outline-none focus:shadow-outline"
           
           >
-         Update Report
+         Update Details
           </button>
         
         </form>

@@ -23,7 +23,7 @@ export default function DisplayHealth() {
 
     async function getProfile() {
       try {
-        const res = await axios.get(`http://localhost:5000/api/vet/getreport/${pid}`)
+        const res = await axios.get(`http://localhost:5000/api/health/getreport/${pid}`)
         setReport(res.data.petReport)
         setvaccinations(res.data.petReport.vaccinations);
         setLoading(false);
@@ -70,7 +70,7 @@ export default function DisplayHealth() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button style={{ marginRight: '1rem' }} onClick={() => {
 
-            axios.delete(`http://localhost:5000/api/vet/deletevac/${index}/${id}`).then((res) => {
+            axios.delete(`http://localhost:5000/api/health/deletevac/${index}/${id}`).then((res) => {
 
             }).catch((err) => {
 
@@ -144,7 +144,7 @@ export default function DisplayHealth() {
 
                         <div class="flex item-center justify-center">
 
-                          <Link to={`/upvac/${id}/${index}/${report.currentHealthStatus}`}>
+                          <Link to={`/petprofile/upvac/${id}/${index}/${report.currentHealthStatus}`}>
                             <div class="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110">
 
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

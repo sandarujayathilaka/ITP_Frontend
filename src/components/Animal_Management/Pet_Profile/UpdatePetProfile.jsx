@@ -14,13 +14,14 @@ export default function UpdatePetProfile(){
     const [species,setSpec] = useState("")
     const [breed,setBreed] = useState("")
     const [gender,setGen] = useState("")
-    const [age,setAge] = useState("")
+    const [birth,setBirth] = useState("")
     const [weight,setWeight] = useState("")
     const [color,setColor] = useState("")
     const [date,setDate] = useState("")
     const [petStatus,setStatus] = useState("")
     const [image,setImage]=useState("")
     const [price,setPrice]=useState("")
+    const [allbreeds, setAllBreed] = useState([]);
 
 
     async function getProfile() {
@@ -41,16 +42,27 @@ export default function UpdatePetProfile(){
     },[])
 
     useEffect(() => {
+      axios
+        .get(`http://localhost:5000/api/petbreed/getbreed`)
+        .then((response) => {
+          console.log(response.data.allbreed);
+          setAllBreed(response.data.allbreed);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
+  
+
+    useEffect(() => {
         setName(profile.petName);
         setSpec(profile.species);
         setBreed(profile.breed);
         setGen(profile.gender);
-        setAge(profile.age);
+        setBirth(profile.birth);
         setWeight(profile.weight);
         setColor(profile.color);
-        if (new Date(profile.date).toString() !== 'Invalid Date') {
-            setDate(new Date(profile.date).toISOString().split('T')[0]);
-          }
+        setDate(profile.date)
         setStatus(profile.petStatus);
         setImage(profile.image)
         setPrice(profile.price)
@@ -69,7 +81,7 @@ export default function UpdatePetProfile(){
             species,
             breed,
             gender,
-            age,
+            birth,
             weight,
             color,
             date,
@@ -135,8 +147,15 @@ export default function UpdatePetProfile(){
             <div class="flex flex-col mb-4 mr-5 mt-3">
          
                 <label class="mb-2 font-bold text-lg text-white ml-5" for="breed">Breed</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="breed" id="breed" value={breed} onChange={(e)=>{
-        setBreed(e.target.value)}}/>
+                <select class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="breed" id="breed" value={breed} onChange={(e)=>{
+        setBreed(e.target.value)}}>
+<option>Select the Breed</option>
+                {allbreeds.map((breed) => (
+                  <option key={breed._id} value={breed.breed}>
+                    {breed.breed}
+                  </option>
+                ))}
+              </select>
         </div>
 
 
@@ -155,9 +174,9 @@ export default function UpdatePetProfile(){
            
             <div class="flex flex-col mb-4 mr-5">
            
-                <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Age</label>
-                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="text" name="age" id="age" value={age} onChange={(e)=>{
-        setAge(e.target.value)}}/>
+                <label class="mb-2 font-bold text-lg text-white ml-5" for="age">Birth Day</label>
+                <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="date" name="birth" id="birth" value={birth} onChange={(e)=>{
+        setBirth(e.target.value)}}/>
         </div>
             
             <div class="flex flex-col mb-4 mr-5">
@@ -188,7 +207,6 @@ export default function UpdatePetProfile(){
            
        <select name="petStatus" id="petStatus" value={petStatus}  onChange={(e)=>{
         setStatus(e.target.value)}}  class="border py-3 px-3 text-grey-800 w-full rounded-xl">
-     <option selected>Choose a health Status</option>
     <option value="Available">Available</option>
    <option value="Adopted">Adopted</option>
    </select>
@@ -197,9 +215,9 @@ export default function UpdatePetProfile(){
         
    <div class="flex flex-col mb-4 mr-5">
            
-           <label class="mb-2 font-bold text-lg text-white ml-5"  for="age">Pet Image</label>
+           <label class="mb-2 font-bold text-lg text-white ml-5"  for="age">Image</label>
            <input class="border py-2 px-3 text-grey-800 w-full rounded-xl" type="file" name="img" id="img" onChange={convertToBase64} />
-              {image==""||image==null?"":<img width={100} height={100} src={image}/>}
+              {image==""||image==null?"":<img width={100} height={100} src={image} className="mt-2 ml-3"/>}
    </div>
 
    <div class="flex flex-col mb-4 mr-5">
@@ -210,7 +228,7 @@ export default function UpdatePetProfile(){
   </div>
 
 
-   <div class="ml-80 mt-3 w-full">
+   <div class="-ml-[320px] mt-[120px] w-full">
             <button class="block bg-primary hover:bg-amber-700 text-white uppercase font-bold text-sm mx-auto  p-4 rounded-3xl" type="submit">Update Profile</button>
             </div>
         </form>

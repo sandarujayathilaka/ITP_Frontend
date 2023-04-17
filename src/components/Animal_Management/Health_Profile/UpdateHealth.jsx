@@ -17,7 +17,7 @@ export default function UpdateHealth(){
     useEffect(() => {
       async function fetchData() {
         try {
-          const res = await axios.get(`http://localhost:5000/api/vet/getreport/${id}`);
+          const res = await axios.get(`http://localhost:5000/api/health/getreport/${id}`);
           const reportdata = res.data.petReport;
           console.log(reportdata.vaccinations)
           setReport(reportdata);
@@ -46,7 +46,7 @@ export default function UpdateHealth(){
         }
 
 
-       await axios.put(`http://localhost:5000/api/vet/reportupdate/${id}`,newpet)
+       await axios.put(`http://localhost:5000/api/health/reportupdate/${id}`,newpet)
         alert("report Updated !!")
 
        }catch (err){
