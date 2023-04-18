@@ -84,7 +84,7 @@ const GetBooking = () => {
 
               const { _id, cus_id, contactNumbers, description, petCount, status, mini } = data;
 
-              const notify = () => toast.success('Booking Verified ', {
+              const notify = () => toast.success('The Sheltering Closed ', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -99,6 +99,7 @@ const GetBooking = () => {
               <div>
 
               </div>
+
 
               const count = 0;
               function updateTransaction() {
@@ -130,7 +131,7 @@ const GetBooking = () => {
                   </td>
 
                   <td class="px-14 py-4 text-sm">
-                    <button class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100" onClick={() => { notify(); refreshPage(); updateTransaction(); }}> Verify  </button>
+                    <button class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100" onClick={() => { notify(); refreshPage(); updateTransaction(); }}> Closed  </button>
                   </td>
                 </tr>
               );

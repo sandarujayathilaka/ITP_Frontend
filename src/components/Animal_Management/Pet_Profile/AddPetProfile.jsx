@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function AddPetProfile() {
 
@@ -38,11 +40,12 @@ function AddPetProfile() {
     axios
       .get(`http://localhost:5000/api/petbreed/getbreed`)
       .then((response) => {
-        console.log(response.data.allbreed);
+       
         setAllBreed(response.data.allbreed);
       })
       .catch((error) => {
         console.log(error);
+        toast.warning(error)
       });
   }, []);
 
@@ -76,7 +79,7 @@ function AddPetProfile() {
       }
     })
       .then(() => {
-        toast.success("Pet added");
+  
         setName("");
         setSpec("");
         setBreed("");
@@ -89,7 +92,10 @@ function AddPetProfile() {
         setId("");
         setImage("")
         setPrice("")
-        setTimeout(() => window.location.reload(), 3000);
+        toast.success('Pet Profile saved successfully',{
+          autoClose: 1000, // Display for 3 seconds
+        });
+        setTimeout(() =>    window.location.href = `/petprofile/allpetprofile`, 2000);
       })
       .catch((err) => {
         alert(`Failed to add pet: ${err}`);

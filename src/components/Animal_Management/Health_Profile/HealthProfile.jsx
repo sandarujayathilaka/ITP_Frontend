@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { Link, Outlet} from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function HealthProfile (){
 
@@ -14,7 +16,6 @@ export default function HealthProfile (){
             const res = await axios.get("http://localhost:5000/api/health/getallreport")
             setReport(res.data.petReport)
                
-                console.log(report)
                 
             }catch(err){
 
@@ -26,16 +27,35 @@ export default function HealthProfile (){
         getReports()
         },[])
 
+      
 
         const onDelete =(id)=>{
-            axios.delete(`http://localhost:5000/api/health/deletereport/${id}`).then((res)=>{
-
-            alert("Report Deleted!!")
-           
-                 }).catch((err)=>{
-     
-                     alert(err)     
-                 })
+            toast.warn(
+                <div>
+                  <p class="text-red-700 ml-8">Do you want to delete ?</p>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button style={{ marginRight: '1rem' }} onClick={() => {
+          
+                      axios.delete(`http://localhost:5000/api/health/deletereport/${id}`).then((res) => {
+          
+                      }).catch((err) => {
+          
+                        toast.warning(err)
+                      })
+                      toast.success('Item deleted successfully',{
+                        autoClose: 1000, 
+                      });
+                      setTimeout(() => {
+                        window.location.href = `/petprofile/healthprofile`;
+                      }, 1500);
+                      
+                    }}>Yes</button>
+                    <button onClick={() => toast.dismiss()}>No</button>
+                  </div>
+                </div>,
+                { autoClose:false }
+              );
+    
         }
 
         const handleFilterChange = (event) => {
@@ -108,14 +128,12 @@ return(
                                
                         </td>
                         
-        
-                        <td class="px-6 py-4 text-center">
-  <span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ml-[18px] ${
-    report.currentHealthStatus === "Critical" ? "bg-red-600" : (report.currentHealthStatus === "Scheduled" ? "bg-yellow-600" : "bg-green-600")
-  }`}>
-    {report.currentHealthStatus === "Critical" ? "Critical" : (report.currentHealthStatus === "Scheduled" ? "Scheduled" : "Normal")}
+<td class="px-6 py-4 text-center">
+  <span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ml-[18px] ${report.currentHealthStatus === "Critical" ? "bg-red-600" : "bg-green-600"}`}>
+    {report.currentHealthStatus === "Critical" ? "Critical" : "Normal"}
   </span>
 </td>
+
 
                     
                         <td class="py-3 px-6 text-center">

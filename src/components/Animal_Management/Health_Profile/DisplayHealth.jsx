@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
-import name from './logo512.png'
+import logo from '../../../assets/pdflogo.png'
 import 'jspdf-autotable';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,12 +41,20 @@ export default function DisplayHealth() {
 
   const generatePDF = () => {
     const doc = new jsPDF('landscape', 'px', 'a4', false);
-    doc.addImage(name, 'JPG', 45, 10, 50, 50);
-    doc.setFont('Helvertica', 'bold');
+    doc.addImage(logo, 'JPG', 45, 10, 50, 50);
+    doc.setFont('times', 'bold');
+
+    doc.text(40, 100, 'Pet ID : ');
+    doc.text(90, 100, id);
+
+    doc.setFontSize(30);
+    doc.text(230, 50, 'Vaccination Report');
+
+  
 
 
     doc.autoTable({
-      startY: 70,
+      startY: 120,
       head: [['Vac Name', 'Date Given', 'Expiration Date']],
       body: vaccinations.map(vaccination => [
         vaccination.name,
@@ -54,7 +62,7 @@ export default function DisplayHealth() {
         vaccination.expirationDate.toString()
       ]),
 
-      theme: 'grid'
+      theme: 'striped'
 
     });
 
@@ -74,9 +82,15 @@ export default function DisplayHealth() {
 
             }).catch((err) => {
 
-              alert(err)
+              toast.warning(err)
             })
-            toast.success('Item deleted successfully');
+            toast.success('Item deleted successfully',{
+              autoClose: 1000, 
+            });
+            setTimeout(() => {
+              window.location.href = `/petprofile/displayhealth/${id}`;
+            }, 1500);
+            
           }}>Yes</button>
           <button onClick={() => toast.dismiss()}>No</button>
         </div>
@@ -103,14 +117,17 @@ export default function DisplayHealth() {
           <h1 class="text-lg font-bold">Pet ID : </h1>
           <h1 class="text-lg">{report.petId}</h1>
         </div>
-
+        
         <div class="flex gap-4 ml-20 mt-2">
-          <h1 class="text-lg font-bold">Pet Status : </h1>
-          <h1 class="text-lg"><span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ${report.currentHealthStatus === "Critical" ? "bg-red-600" : (report.currentHealthStatus === "Scheduled" ? "bg-yellow-600" : "bg-green-600")
-            }`}>
-            {report.currentHealthStatus === "Critical" ? "Critical" : (report.currentHealthStatus === "Scheduled" ? "Scheduled" : "Normal")}
-          </span></h1>
-        </div>
+  <h1 class="text-lg font-bold">Pet Status : </h1>
+  <h1 class="text-lg">
+    <span class={`text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full ${report.currentHealthStatus === "Critical" ? "bg-red-600" : "bg-green-600"}`}>
+      {report.currentHealthStatus === "Critical" ? "Critical" : "Normal"}
+    </span>
+  </h1>
+</div>
+
+
 
         {loading ? (
           <button disabled type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">

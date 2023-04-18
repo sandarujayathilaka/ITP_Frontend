@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export default function UpdatePetProfile(){
@@ -90,10 +93,12 @@ export default function UpdatePetProfile(){
             price
         }
 
-        console.log(petName)
-
+        
        await axios.put(`http://localhost:5000/api/vet/updateprofile/${id}`,newpet)
-        alert("post Updated !!")
+       toast.success('profile Updated successfully',{
+        autoClose: 1000, // Display for 3 seconds
+      });
+      setTimeout(() =>    window.location.href = `/petprofile/profilepage/${id}`, 2000);
 
        }catch (err){
         console.error(err);

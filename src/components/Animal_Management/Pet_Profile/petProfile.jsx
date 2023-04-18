@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { Link, Outlet} from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AllPetProfile(){
 
@@ -24,16 +26,32 @@ export default function AllPetProfile(){
         getProfiles()
         },[])
 
-
         const onDelete =(id)=>{
-            axios.delete(`http://localhost:5000/api/vet/deleteprofile/${id}`).then((res)=>{
-
-            alert("Profile Deleted!!")
-           
-                 }).catch((err)=>{
-     
-                     alert(err)     
-                 })
+            toast.warn(
+                <div>
+                  <p class="text-red-700 ml-8">Do you want to delete ?</p>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button style={{ marginRight: '1rem' }} onClick={() => {
+              
+                      axios.delete(`http://localhost:5000/api/vet/deleteprofile/${id}`).then((res) => {
+              
+                      }).catch((err) => {
+              
+                        toast.warning(err)
+                      })
+                      toast.success('Profile Deleted successfully',{
+                        autoClose: 1000, 
+                      });
+                      setTimeout(() => {
+                        window.location.href = `/petprofile/allpetprofile`;
+                      }, 1500);
+                      
+                    }}>Yes</button>
+                    <button onClick={() => toast.dismiss()}>No</button>
+                  </div>
+                </div>,
+                { autoClose:false }
+              );
         }
 
         const formatDate = dateString => {

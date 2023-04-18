@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Breed() {
   const [breeds, setBreed] = useState([]);
@@ -39,7 +42,10 @@ export default function Breed() {
 
         setBreed("");
 
-        setTimeout(() => window.location.reload(), 3000);
+        toast.success('Breed Added successfully',{
+          autoClose: 500, 
+        });
+        setTimeout(() =>    window.location.href = `/petprofile/breed`, 1000);
       })
       .catch((err) => {
         alert(`Failed to add pet: ${err}`);
@@ -105,8 +111,12 @@ export default function Breed() {
 
 
      await axios.put(`http://localhost:5000/api/petbreed/breedupdate/${upId}`,newbreed)
-      alert("post Updated !!")
-
+    
+     toast.success('Breed Updated successfully',{
+      autoClose: 500, 
+    });
+    setTimeout(() =>    window.location.href = `/petprofile/breed`, 1000);
+  
      }catch (err){
       console.error(err);
     }
@@ -114,15 +124,35 @@ export default function Breed() {
   }
 
   const onDelete =(id)=>{
-    axios.delete(`http://localhost:5000/api/petbreed/deletebreed/${id}`).then((res)=>{
-
-    alert("Profile Deleted!!")
-   
-         }).catch((err)=>{
-
-             alert(err)     
-         })
+    toast.warn(
+      <div>
+        <p class="text-red-700 ml-8">Do you want to delete ?</p>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button style={{ marginRight: '1rem' }} onClick={() => {
+    
+            axios.delete(`http://localhost:5000/api/petbreed/deletebreed/${id}`).then((res) => {
+    
+            }).catch((err) => {
+    
+              toast.warning(err)
+            })
+            toast.success('Item Updated successfully',{
+              autoClose: 1000, 
+            });
+            setTimeout(() => {
+              window.location.href = `/petprofile/breed`;
+            }, 1500);
+            
+          }}>Yes</button>
+          <button onClick={() => toast.dismiss()}>No</button>
+        </div>
+      </div>,
+      { autoClose:false }
+    );
+    
 }
+
+
 
 function filterContent(breed, searchTerm) {
  
@@ -286,7 +316,7 @@ const handleTextSearch = (e) => {
 
           <div className="flex items-center justify-between ">
             <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-              Add
+              Update
             </button>
             <button onClick={closeUpModal} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
               Close

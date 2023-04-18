@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function AddHealth() {
 
@@ -18,9 +20,9 @@ function AddHealth() {
             try {
               await axios.post("http://localhost:5000/api/health/addreport", newreport);
               toast.success('Report saved successfully',{
-                autoClose: 1500, // Display for 3 seconds
+                autoClose: 1000, // Display for 3 seconds
               });
-              setTimeout(() => window.location.reload(), 2500);
+              setTimeout(() =>    window.location.href = `/petprofile/healthprofile`, 2000);
             } catch (error) {
               console.log(error);
 
@@ -74,7 +76,7 @@ function AddHealth() {
           <option selected>Choose a health Status</option>
          <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>
-        <option value="Scheduled">Scheduled</option>
+      
  
         </select>
         </div>

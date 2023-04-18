@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function UpdateVac() {
 
@@ -17,7 +19,7 @@ export default function UpdateVac() {
     console.log(healthState+"hi")
 
    useEffect(() => {
-    console.log("hidfd")
+    
         async function fetchData() {
           try {
             const res = await axios.get(`http://localhost:5000/api/health/getreport/${pid}`);
@@ -53,7 +55,10 @@ export default function UpdateVac() {
             try {
                
               await axios.put(`http://localhost:5000/api/health/reportupdate/${pid}`, newreport);
-              alert('Report saved successfully');
+              toast.success('Report Updated successfully',{
+                autoClose: 1000, // Display for 3 seconds
+              });
+              setTimeout(() =>    window.location.href = `/petprofile/displayhealth/${pid}`, 2000);
             } catch (error) {
               console.log(error);
               alert('Failed to save report');
@@ -89,7 +94,7 @@ export default function UpdateVac() {
         <option selected >{healthState}</option>
         <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>
-        <option value="Scheduled">Scheduled</option>
+      
  
         </select>
         </div>

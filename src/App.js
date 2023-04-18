@@ -14,7 +14,6 @@ import HealthProfile from './components/Animal_Management/Health_Profile/HealthP
 import AddHealth from './components/Animal_Management/Health_Profile/AddHealth';
 import DisplayHealth from './components/Animal_Management/Health_Profile/DisplayHealth';
 import Test from './components/Animal_Management/Test';
-import UpdateHealth from './components/Animal_Management/Health_Profile/UpdateHealth';
 import VacReport from './components/Animal_Management/Health_Profile/VacReport'
 import Addvac from './components/Animal_Management/Health_Profile/Addvac'
 import AdoptPet from './components/adoptPetPage/AdoptPet';
@@ -51,7 +50,8 @@ function App() {
              
             
             </Route>
-            <Route path='UpdateHealth/:id' element={<UpdateHealth/>}/>
+
+          
          
             <Route path='/test/:id/qrcode' element={<Test />} />
            
