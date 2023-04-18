@@ -7,8 +7,10 @@ function AddHealth() {
 
   const [petId, setPetId] = useState('');
   const param = useParams();
+  const descri = param.des;
   const healthState = param.state;
   const [currentHealthStatus, setCurrentHealthStatus] = useState(healthState);
+  const [description, setDes] = useState(descri);
   const [vaccinations, setVaccinations] = useState([]);
   const pid = param.id;
   console.log(healthState)
@@ -21,13 +23,14 @@ function AddHealth() {
     const newreport = {
       petId,
       currentHealthStatus,
+      description,
       vaccinations
     };
 
     try {
       await axios.put(`http://localhost:5000/api/health/addvac/${pid}`, newreport);
       toast.success('Report saved successfully',{
-        autoClose: 1000, // Display for 1 second
+        autoClose: 1000, 
       });
       setTimeout(() => {
         window.location.href = `/petprofile/displayhealth/${pid}`;
@@ -83,6 +86,19 @@ function AddHealth() {
             
 
             </select>
+
+            <label htmlFor="descri"
+            className=" mb-2 w-[89px] mt-3 h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
+          >
+           Description :
+          </label>
+          <textarea id="descri" name="descri" value={description} onChange={(event) => setDes(event.target.value)}
+          className="py-2 px-3 w-[819px] h-[85px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Enter Description"></textarea>
+
+
+
+
           </div>
 
           {vaccinations.map((vaccination, index) => (

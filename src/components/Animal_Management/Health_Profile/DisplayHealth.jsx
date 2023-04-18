@@ -109,9 +109,9 @@ export default function DisplayHealth() {
           <h1 class="text-2xl font-bold text-[#131342] text-center">Vaccination Report</h1>
         </div>
         <div class="ml-[600px] -mt-7">
-          <Link to={`/petprofile/addvac/${id}/${report.currentHealthStatus}`}
-            className=" bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mb-7 mx-auto"
-          >Add New Vac</Link>
+          <Link to={`/petprofile/addvac/${id}/${report.currentHealthStatus}/${report.description}`}
+            className=" bg-[#2E4960] hover:bg-[#084469] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[14px] block w-[150px] text-center mb-7 mx-auto"
+          > Edit Report</Link>
         </div>
         <div class="flex gap-4 ml-20 mt-5">
           <h1 class="text-lg font-bold">Pet ID : </h1>
@@ -126,6 +126,11 @@ export default function DisplayHealth() {
     </span>
   </h1>
 </div>
+
+<div class="flex gap-4 ml-20 mt-2">
+          <h1 class="text-lg font-bold">Description : </h1>
+          <p class="text-lg">{report.description}</p>
+        </div>
 
 
 
@@ -192,7 +197,7 @@ export default function DisplayHealth() {
           </div>
         )}
 
-        <button onClick={generatePDF} className="bg-[#2E4960] hover:bg-[#797979] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[10px] block w-[150px] text-center mx-auto">Download pdf</button>
+        <button onClick={generatePDF} className="bg-[#30475c]  hover:bg-[#084469] px-[15px] py-[8px] rounded-[120px] font-bold text-white text-[14px] block w-[150px] text-center mx-auto">Download pdf</button>
 
         <br></br>
 

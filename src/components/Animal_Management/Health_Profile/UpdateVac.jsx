@@ -84,13 +84,13 @@ export default function UpdateVac() {
           className="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter your pet's ID"/>
 
-          <label htmlFor="pet-id"
+          <label htmlFor="status"
             className="mt-2 mb-2 w-[89px] h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
           >
             Status:
           </label>
 
-        <select name="currentHealthStatus"  value={currentHealthStatus} onChange={(event) => setCurrentHealthStatus(event.target.value)} id="currentHealthStatus" class="py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <select name="currentHealthStatus"  value={currentHealthStatus} onChange={(event) => setCurrentHealthStatus(event.target.value)} id="currentHealthStatus" class=" py-2 px-3 w-[819px] h-[45px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         <option selected >{healthState}</option>
         <option value="Normal">Normal</option>
         <option value="Critical">Critical</option>

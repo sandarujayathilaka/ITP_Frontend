@@ -66,8 +66,8 @@ export default function AllPetProfile(){
             const result = profile.filter(
               (r) =>
                 r.petId.includes(searchTerm) ||
-                r.breed.toLowerCase().includes(searchTerm)||
-                r.breed.includes(searchTerm)
+                r.breed.toLowerCase().includes(searchTerm.toLowerCase())
+             
             );
             setProfile(result);
           }

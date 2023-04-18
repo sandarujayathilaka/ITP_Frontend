@@ -40,7 +40,7 @@ const GetBooking = () => {
     const result = book.filter(
       (r) =>
         r.
-        cus_id.includes(searchTerm) 
+        cus_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setpayData(result);
   }
@@ -66,13 +66,14 @@ const GetBooking = () => {
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID or Breed" required/>
+        <input type="text" id="simple-search"  onChange={handleTextSearch} class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID or Name" required/>
     </div>
     </form>
         <table class='mx-auto mt-10 max-w-5xl shadow-2xl w-full whitespace-nowrap rounded-lg bg-gray-300 divide-y divide-gray-300 overflow-hidden table-auto'>
           <thead class="bg-[#2E4960] sticky top-0">
             <tr class="text-white text-left">
-              <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Customer ID </th>
+              <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Booking ID </th>
+              <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Customer Name</th>
               <th class="font-semibold text-sm uppercase text-center px-6 py-4"> Price Status </th>
               <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Pet Count </th>
               <th class="font-semibold text-sm uppercase px-6 py-4 text-center">Pet Id's </th>
@@ -82,7 +83,7 @@ const GetBooking = () => {
           <tbody class="divide-y divide-gray-400">
             {payData.filter(data => data.status === "SHELTERED" || data.status === "CLOSED").map((data) => {
 
-              const { _id, cus_id, contactNumbers, description, petCount, status, mini } = data;
+              const { _id, cus_id,cus_name,bid, contactNumbers, description, petCount, status, mini } = data;
 
               const notify = () => toast.success('The Sheltering Closed ', {
                 position: "top-right",
@@ -122,7 +123,8 @@ const GetBooking = () => {
 
               return (
                 <tr class="text-black text-left" key={_id}>
-                  <td class="py-3 px-6 text-center">{cus_id}</td>
+                  <td class="py-3 px-6 text-center">{bid}</td>
+                  <td class="py-3 px-6 text-center">{cus_name}</td>
                   <td class="text-center px-14 py-3 text-sm">{status}</td>
                   <td class=" text-center px-14 py-3 text-sm">{petCount}</td>
                   <td class="text-center px-14 py-3 text-sm">

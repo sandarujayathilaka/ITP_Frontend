@@ -7,14 +7,18 @@ import 'react-toastify/dist/ReactToastify.css';
 function AddHealth() {
 
     const [petId, setPetId] = useState('');
+    const [description, setDes] = useState("");
     const [currentHealthStatus, setCurrentHealthStatus] = useState('');
     const [vaccinations, setVaccinations] = useState([]);
+
+    console.log(description)
    
         const handleSubmit = async (event) => {
             event.preventDefault();
             const newreport = { 
                 petId, 
                 currentHealthStatus, 
+                description,
                 vaccinations };
 
             try {
@@ -79,6 +83,16 @@ function AddHealth() {
       
  
         </select>
+
+        <label htmlFor="descri"
+            className=" mb-2 w-[89px] mt-3 h-[20px] left-[526px] top-[268px] font- not-italic font-[700] text-[16px] leading-[29px] text-black "
+          >
+           Description :
+          </label>
+          <textarea id="descri" name="descri" value={description} onChange={(event) => setDes(event.target.value)}
+          className="py-2 px-3 w-[819px] h-[85px] left-[671px] top-[265px]  mt-3 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Enter Description"></textarea>
+
         </div>
    
          {vaccinations.map((vaccination, index) => (
